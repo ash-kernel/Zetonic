@@ -3,10 +3,8 @@ const video = document.getElementById("bg");
 let videos = [];
 let currentIndex = 0;
 
-// Remote GitHub raw URL (paste your raw URL here to use remote list). Example:
-// https://raw.githubusercontent.com/<your-username>/<repo>/main/sup/videos.json
-const REMOTE_VIDEOS_URL = ""; // <-- set this to your raw.githubusercontent.com URL or leave empty to use local `sup/videos.json`
 
+const REMOTE_VIDEOS_URL = "https://raw.githubusercontent.com/ash-kernel/Zetonic/refs/heads/main/sup/videos.json"; 
 async function loadVideos() {
   try {
     let data;
@@ -27,7 +25,7 @@ async function loadVideos() {
     video.load();
   } catch (err) {
     console.error('Error loading videos (remote/local):', err);
-    // Try fallback to local bundled file if remote failed
+ 
     try {
       const r = await fetch(chrome.runtime.getURL("sup/videos.json"));
       const localData = await r.json();
@@ -100,7 +98,7 @@ const quotes = [
 
 const quoteEl = document.getElementById("quote");
 
-// Fetch random quote from Advice Slip API
+
 async function loadQuote() {
   try {
     const response = await fetch("https://api.adviceslip.com/advice");
@@ -108,7 +106,7 @@ async function loadQuote() {
     quoteEl.textContent = `"${data.slip.advice}"`;
   } catch (error) {
     console.error("Error loading quote:", error);
-    // Fallback to local quotes if API fails
+
     quoteEl.textContent = quotes[Math.floor(Math.random() * quotes.length)];
   }
 }
