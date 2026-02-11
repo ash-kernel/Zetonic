@@ -1,0 +1,96 @@
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: system-ui, sans-serif;
+  color: white;
+  overflow: hidden;
+}
+
+
+#bg {
+  position: fixed;
+  inset: 0;
+  object-fit: cover;
+  z-index: -2;
+}
+
+#overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: -1;
+}
+
+
+#timeContainer {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 5;
+}
+
+#time {
+  font-size: 88px;
+  font-weight: 600;
+  transition: opacity 0.3s;
+}
+
+#date {
+  margin-top: 10px;
+  font-size: 18px;
+  opacity: 0.85;
+}
+
+
+#searchContainer {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 5;
+}
+
+#googleLogo {
+  height: 30px;
+  transition: transform 0.3s;
+}
+
+#searchContainer input {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: none;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  outline: none;
+  width: 300px;
+  transition: width 0.3s;
+}
+
+#searchContainer input:focus {
+  width: 400px;
+}
+
+
+
+/* Quote */
+#quote {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  opacity: 0.8;
+  text-align: center;
+  max-width: 600px;
+}
