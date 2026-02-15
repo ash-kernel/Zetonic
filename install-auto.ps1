@@ -71,8 +71,11 @@ Write-Host "Folder: $installDir" -ForegroundColor Cyan
 Write-Host "=========================================" -ForegroundColor Cyan
 Write-Host ""
 
+$chromePath = "C:\Program Files\Google\Chrome\Application\chrome.exe"
+
 Write-Host "→ Opening Chrome Extensions page..." -ForegroundColor Yellow
-Start-Process "chrome://extensions/"
+$extensionUrl = "chrome://extensions/"
+Start-Process -FilePath $chromePath -ArgumentList $extensionUrl
 
 Write-Host "→ Opening extension folder..." -ForegroundColor Yellow
 Start-Process $installDir
