@@ -13,6 +13,7 @@ Zetonic replaces the browser new-tab experience with a clean, minimalist view th
 
 ## Installation
 
+### Manual Installation
 1. Clone or download this repository
 2. Open Chrome and go to `chrome://extensions/`
 3. Enable **Developer mode** (toggle in top-right)
