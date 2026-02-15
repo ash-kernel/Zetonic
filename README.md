@@ -1,6 +1,7 @@
 # Zetonic — Minimalist Anime New Tab
 
-![Zetonic Banner](https://media.discordapp.net/attachments/1470985393708208323/1471048403046895649/readmebanner.png?ex=698d8416&is=698c3296&hm=59327cd044eea4ff7b87df9b2530580e08e7e9b9bf3a92c244dddf6ba77ecb6f&=&format=webp&quality=lossless)
+![Zetonic Banner](https://raw.githubusercontent.com/ash-kernel/Zetonic/main/assets/icon-banner.png)
+
 
 **Zetonic** replaces your browser’s default new tab with a clean, immersive anime-inspired experience.  
 It streams scenic background videos, displays a live clock and date, and provides a quick Google search bar with rotating inspirational quotes — all in a distraction-free minimalist layout.
