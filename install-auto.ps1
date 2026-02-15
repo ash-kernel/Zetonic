@@ -1,45 +1,63 @@
+$ErrorActionPreference = "Stop"
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
 $repo = "ash-kernel/Zetonic"
 $branch = "main"
+$baseUrl = "https://raw.githubusercontent.com/$repo/$branch"
 
-$zipUrl = "https://github.com/$repo/archive/refs/heads/$branch.zip"
-
-# Target directory
 $documents = [Environment]::GetFolderPath("MyDocuments")
-$extensionsDir = Join-Path $documents "extensions"
-$installDir = Join-Path $extensionsDir "Zetonic"
+$installDir = Join-Path $documents "extensions\Zetonic"
 
-$zipPath = "$env:TEMP\zetonic.zip"
+$files = @(
+    "index.html",
+    "script.js",
+    "style.css",
+    "manifest.json",
+    "sup/videos.json"
+)
 
-Write-Host "[INFO] Preparing installation..." -ForegroundColor Cyan
+Clear-Host
+Write-Host ""
+Write-Host "=========================================" -ForegroundColor Cyan
+Write-Host "              ZETONIC INSTALLER          " -ForegroundColor Cyan
+Write-Host "=========================================" -ForegroundColor Cyan
+Write-Host ""
 
-# Create extensions folder if missing
-if (-not (Test-Path $extensionsDir)) {
-    New-Item -ItemType Directory -Path $extensionsDir -Force | Out-Null
+if (-not (Test-Path $installDir)) {
+    New-Item -ItemType Directory -Path $installDir -Force | Out-Null
 }
 
-# Download ZIP
-Write-Host "[INFO] Downloading Zetonic..." -ForegroundColor Cyan
-Invoke-WebRequest -Uri $zipUrl -OutFile $zipPath
+foreach ($file in $files) {
 
-# Remove old install if exists
-if (Test-Path $installDir) {
-    Write-Host "[INFO] Removing old version..." -ForegroundColor Yellow
-    Remove-Item $installDir -Recurse -Force
+    $url = "$baseUrl/$file"
+    $destination = Join-Path $installDir $file
+    $folder = Split-Path $destination -Parent
+
+    if (-not (Test-Path $folder)) {
+        New-Item -ItemType Directory -Path $folder -Force | Out-Null
+    }
+
+    try {
+        Write-Host "[DOWNLOADING] $file" -ForegroundColor Cyan
+        Invoke-WebRequest -Uri $url -OutFile $destination -UseBasicParsing
+        Write-Host "[OK]" -ForegroundColor Green
+    }
+    catch {
+        Write-Host "[FAILED] $file" -ForegroundColor Red
+        exit 1
+    }
 }
 
-# Extract ZIP to Documents/extensions
-Write-Host "[INFO] Extracting..." -ForegroundColor Cyan
-Expand-Archive -Path $zipPath -DestinationPath $extensionsDir -Force
-
-# GitHub extracts as Zetonic-main → rename it
-$extracted = Join-Path $extensionsDir "Zetonic-$branch"
-Rename-Item $extracted $installDir
-
-# Cleanup
-Remove-Item $zipPath -Force
-
 Write-Host ""
-Write-Host "[SUCCESS] Installed to:" -ForegroundColor Green
-Write-Host "$installDir" -ForegroundColor Cyan
+Write-Host "=========================================" -ForegroundColor Cyan
+Write-Host "SUCCESS! Zetonic installed." -ForegroundColor Green
 Write-Host ""
-Write-Host "Load it in chrome://extensions/" -ForegroundColor Gray
+Write-Host "To load it in Chrome:" -ForegroundColor Yellow
+Write-Host "1. Open Chrome"
+Write-Host "2. Go to chrome://extensions/"
+Write-Host "3. Enable Developer Mode (top right)"
+Write-Host "4. Click 'Load unpacked'"
+Write-Host "5. Select this folder:"
+Write-Host "   $installDir" -ForegroundColor Cyan
+Write-Host "=========================================" -ForegroundColor Cyan
+Write-Host ""
