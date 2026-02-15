@@ -13,8 +13,10 @@ $files = @(
     "script.js",
     "style.css",
     "manifest.json",
+    "icon.png",
     "sup/videos.json"
 )
+
 
 Clear-Host
 Write-Host ""
