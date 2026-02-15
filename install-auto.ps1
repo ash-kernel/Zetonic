@@ -1,83 +1,45 @@
-# ==========================================
-#           ZETONIC INSTALLER
-# ==========================================
+$repo = "ash-kernel/Zetonic"
+$branch = "main"
 
-$ErrorActionPreference = "Stop"
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+$zipUrl = "https://github.com/$repo/archive/refs/heads/$branch.zip"
 
-$Green  = "Green"
-$Red    = "Red"
-$Cyan   = "Cyan"
-$Yellow = "Yellow"
-$Gray   = "Gray"
+# Target directory
+$documents = [Environment]::GetFolderPath("MyDocuments")
+$extensionsDir = Join-Path $documents "extensions"
+$installDir = Join-Path $extensionsDir "Zetonic"
 
-Clear-Host
-Write-Host ""
-Write-Host "=========================================" -ForegroundColor $Cyan
-Write-Host "             Z E T O N I C              " -ForegroundColor $Cyan
-Write-Host "=========================================" -ForegroundColor $Cyan
-Write-Host "Minimalist New Tab Extension Installer"
-Write-Host ""
+$zipPath = "$env:TEMP\zetonic.zip"
 
-# Repo config
-$githubRepo   = "ash-kernel/Zetonic"
-$githubBranch = "main"
-$baseUrl = "https://raw.githubusercontent.com/$githubRepo/$githubBranch"
+Write-Host "[INFO] Preparing installation..." -ForegroundColor Cyan
 
-# Install location
-$installDir = "$env:LOCALAPPDATA\Zetonic"
-
-# Files
-$files = @(
-    "index.html",
-    "script.js",
-    "style.css",
-    "manifest.json",
-    "sup/videos.json"
-)
-
-Write-Host "[INFO] Preparing installation..." -ForegroundColor $Cyan
-
-if (-not (Test-Path $installDir)) {
-    New-Item -ItemType Directory -Path $installDir -Force | Out-Null
+# Create extensions folder if missing
+if (-not (Test-Path $extensionsDir)) {
+    New-Item -ItemType Directory -Path $extensionsDir -Force | Out-Null
 }
 
-Write-Host "[OK] Directory ready: $installDir" -ForegroundColor $Green
-Write-Host ""
+# Download ZIP
+Write-Host "[INFO] Downloading Zetonic..." -ForegroundColor Cyan
+Invoke-WebRequest -Uri $zipUrl -OutFile $zipPath
 
-foreach ($file in $files) {
-
-    $url = "$baseUrl/$file"
-    $destination = Join-Path $installDir $file
-    $folder = Split-Path $destination -Parent
-
-    if (-not (Test-Path $folder)) {
-        New-Item -ItemType Directory -Path $folder -Force | Out-Null
-    }
-
-    try {
-        Write-Host "[DOWNLOAD] $file" -ForegroundColor $Cyan
-        Invoke-WebRequest -Uri $url -OutFile $destination -UseBasicParsing
-        Write-Host "[OK] Saved" -ForegroundColor $Green
-    }
-    catch {
-        Write-Host "[ERROR] Failed to download $file" -ForegroundColor $Red
-        Write-Host "URL: $url" -ForegroundColor $Yellow
-        exit 1
-    }
-
-    Write-Host ""
+# Remove old install if exists
+if (Test-Path $installDir) {
+    Write-Host "[INFO] Removing old version..." -ForegroundColor Yellow
+    Remove-Item $installDir -Recurse -Force
 }
 
-Write-Host "=========================================" -ForegroundColor $Cyan
-Write-Host "[SUCCESS] Zetonic downloaded!" -ForegroundColor $Green
+# Extract ZIP to Documents/extensions
+Write-Host "[INFO] Extracting..." -ForegroundColor Cyan
+Expand-Archive -Path $zipPath -DestinationPath $extensionsDir -Force
+
+# GitHub extracts as Zetonic-main → rename it
+$extracted = Join-Path $extensionsDir "Zetonic-$branch"
+Rename-Item $extracted $installDir
+
+# Cleanup
+Remove-Item $zipPath -Force
+
 Write-Host ""
-Write-Host "Next Steps:" -ForegroundColor $Yellow
-Write-Host "1. Open Chrome"
-Write-Host "2. Go to chrome://extensions/"
-Write-Host "3. Enable Developer Mode"
-Write-Host "4. Click 'Load unpacked'"
-Write-Host "5. Select:"
-Write-Host "   $installDir" -ForegroundColor $Cyan
-Write-Host "=========================================" -ForegroundColor $Cyan
+Write-Host "[SUCCESS] Installed to:" -ForegroundColor Green
+Write-Host "$installDir" -ForegroundColor Cyan
 Write-Host ""
+Write-Host "Load it in chrome://extensions/" -ForegroundColor Gray
