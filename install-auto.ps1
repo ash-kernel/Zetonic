@@ -18,17 +18,31 @@ $files = @(
 
 Clear-Host
 Write-Host ""
-Write-Host "=========================================" -ForegroundColor Cyan
-Write-Host "            ZETONIC INSTALLER            " -ForegroundColor Cyan
-Write-Host "=========================================" -ForegroundColor Cyan
+Write-Host "███████╗███████╗████████╗ ██████╗ ██╗   ██╗██╗ ██████╗" -ForegroundColor Cyan
+Write-Host "╚════██║██╔════╝╚══██╔══╝██╔═══██╗██║   ██║██║██╔════╝" -ForegroundColor Cyan
+Write-Host "    ██║█████╗     ██║   ██║   ██║██║   ██║██║██║     " -ForegroundColor Cyan
+Write-Host "    ██║██╔══╝     ██║   ██║   ██║██║   ██║██║██║     " -ForegroundColor Cyan
+Write-Host "███████║███████╗   ██║   ╚██████╔╝╚██████╔╝██║╚██████╗" -ForegroundColor Cyan
+Write-Host "╚══════╝╚══════╝   ╚═╝    ╚═════╝  ╚═════╝ ╚═╝ ╚═════╝ " -ForegroundColor Cyan
+Write-Host ""
+Write-Host "ZETONIC Auto-Installer v1.0" -ForegroundColor Yellow
+Write-Host "Minimalist Anime New Tab Experience" -ForegroundColor Green
 Write-Host ""
 
+# Create install directory
+Write-Host "→ Setting up installation folder..." -ForegroundColor Cyan
 if (-not (Test-Path $installDir)) {
     New-Item -ItemType Directory -Path $installDir -Force | Out-Null
+    Write-Host "✓ Created: $installDir" -ForegroundColor Green
+} else {
+    Write-Host "✓ Folder exists: $installDir" -ForegroundColor Green
 }
 
-foreach ($file in $files) {
+# Download files
+Write-Host ""
+Write-Host "→ Downloading extension files..." -ForegroundColor Cyan
 
+foreach ($file in $files) {
     $url = "$baseUrl/$file"
     $destination = Join-Path $installDir $file
     $folder = Split-Path $destination -Parent
@@ -38,36 +52,35 @@ foreach ($file in $files) {
     }
 
     try {
-        Write-Host "[DOWNLOADING] $file" -ForegroundColor Yellow
+        Write-Host "  ⤓ Downloading $file..." -ForegroundColor Cyan
         Start-BitsTransfer -Source $url -Destination $destination -ErrorAction Stop
-        Write-Host "[OK]" -ForegroundColor Green
+        Write-Host "  ✓ $file" -ForegroundColor Green
     }
     catch {
-        Write-Host ""
-        Write-Host "[FAILED] $file" -ForegroundColor Red
-        Write-Host $_.Exception.Message -ForegroundColor Red
+        Write-Host "  ✗ Failed: $file" -ForegroundColor Red
+        Write-Host "    URL: $url" -ForegroundColor Red
+        Write-Host "    $_" -ForegroundColor Red
         exit 1
     }
 }
 
 Write-Host ""
 Write-Host "=========================================" -ForegroundColor Cyan
-Write-Host "INSTALLATION COMPLETE" -ForegroundColor Green
+Write-Host "✓ Zetonic installed successfully!" -ForegroundColor Green
+Write-Host "Folder: $installDir" -ForegroundColor Cyan
 Write-Host "=========================================" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "Extension installed at:" -ForegroundColor White
-Write-Host "$installDir" -ForegroundColor Cyan
-Write-Host ""
-Write-Host "Opening Chrome Extensions page..." -ForegroundColor Yellow
 
+Write-Host "→ Opening Chrome Extensions page..." -ForegroundColor Yellow
 Start-Process "chrome://extensions/"
+
+Write-Host "→ Opening extension folder..." -ForegroundColor Yellow
 Start-Process $installDir
 
 Write-Host ""
 Write-Host "NEXT STEPS:" -ForegroundColor Magenta
-Write-Host "1. Enable Developer Mode (top right)"
+Write-Host "1. Enable Developer Mode (top right in Chrome)"
 Write-Host "2. Click 'Load unpacked'"
-Write-Host "3. Select the Zetonic folder that just opened"
+Write-Host "3. Select the Zetonic folder that opened"
+Write-Host "4. Enjoy your new minimal anime new tab!" -ForegroundColor Green
 Write-Host ""
-Write-Host "Thank you for installing Zetonic!" -ForegroundColor Green
-Write-Host "If you have any issues, please report them at: https://github.com/ash-kernel/Zetonic/issues" -ForegroundColor White
