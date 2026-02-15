@@ -1,6 +1,6 @@
 # Zetonic — Minimalist Anime New Tab
 
-![Zetonic Banner](https://raw.githubusercontent.com/ash-kernel/Zetonic/main/sub/icon-banner.png)
+![Zetonic Banner](https://raw.githubusercontent.com/ash-kernel/Zetonic/main/sup/icon-banner.png)
 
 
 **Zetonic** replaces your browser’s default new tab with a clean, immersive anime-inspired experience.  
