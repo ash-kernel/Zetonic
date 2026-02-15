@@ -2,7 +2,7 @@ $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 $repo = "ash-kernel/Zetonic"
-$branch = "master"
+$branch = "main"
 $baseUrl = "https://raw.githubusercontent.com/$repo/$branch"
 
 $documents = [Environment]::GetFolderPath("MyDocuments")
@@ -40,13 +40,7 @@ foreach ($file in $files) {
 
     try {
         Write-Host "[DOWNLOADING] $file" -ForegroundColor Cyan
-
-        $response = Invoke-WebRequest -Uri $url -OutFile $destination -UseBasicParsing -ErrorAction Stop
-
-        if ($response.StatusCode -ne 200) {
-            throw "HTTP Status: $($response.StatusCode)"
-        }
-
+        Invoke-WebRequest -Uri $url -OutFile $destination -UseBasicParsing -ErrorAction Stop
         Write-Host "[OK]" -ForegroundColor Green
     }
     catch {
@@ -59,16 +53,7 @@ foreach ($file in $files) {
 }
 
 Write-Host ""
-Write-Host "=========================================" -ForegroundColor Cyan
 Write-Host "SUCCESS! Zetonic installed." -ForegroundColor Green
-Write-Host ""
-Write-Host "Location:" -ForegroundColor Yellow
-Write-Host "$installDir" -ForegroundColor Cyan
-Write-Host ""
-Write-Host "Load in Chrome:" -ForegroundColor Yellow
-Write-Host "1. Open chrome://extensions/"
-Write-Host "2. Enable Developer Mode"
-Write-Host "3. Click Load unpacked"
-Write-Host "4. Select the Zetonic folder"
-Write-Host "=========================================" -ForegroundColor Cyan
+Write-Host "Location:"
+Write-Host "$installDir"
 Write-Host ""
