@@ -2,7 +2,7 @@ $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 $repo = "ash-kernel/Zetonic"
-$branch = "mmaster"
+$branch = "master"
 $baseUrl = "https://raw.githubusercontent.com/$repo/$branch"
 
 $documents = [Environment]::GetFolderPath("MyDocuments")
