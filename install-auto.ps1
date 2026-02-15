@@ -1,5 +1,4 @@
 $ErrorActionPreference = "Stop"
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 $repo = "ash-kernel/Zetonic"
 $branch = "main"
@@ -19,9 +18,7 @@ $files = @(
 
 Clear-Host
 Write-Host ""
-Write-Host "=========================================" -ForegroundColor Cyan
-Write-Host "              ZETONIC INSTALLER          " -ForegroundColor Cyan
-Write-Host "=========================================" -ForegroundColor Cyan
+Write-Host "Installing Zetonic..."
 Write-Host ""
 
 if (-not (Test-Path $installDir)) {
@@ -39,21 +36,20 @@ foreach ($file in $files) {
     }
 
     try {
-        Write-Host "[DOWNLOADING] $file" -ForegroundColor Cyan
-        Invoke-WebRequest -Uri $url -OutFile $destination -UseBasicParsing -ErrorAction Stop
-        Write-Host "[OK]" -ForegroundColor Green
+        Write-Host "Downloading $file..."
+        Start-BitsTransfer -Source $url -Destination $destination -ErrorAction Stop
+        Write-Host "OK"
     }
     catch {
         Write-Host ""
-        Write-Host "[FAILED] $file" -ForegroundColor Red
-        Write-Host "URL: $url" -ForegroundColor Yellow
-        Write-Host $_.Exception.Message -ForegroundColor Red
+        Write-Host "FAILED: $file"
+        Write-Host "URL: $url"
+        Write-Host $_.Exception.Message
         exit 1
     }
 }
 
 Write-Host ""
-Write-Host "SUCCESS! Zetonic installed." -ForegroundColor Green
-Write-Host "Location:"
-Write-Host "$installDir"
+Write-Host "Zetonic installed at:"
+Write-Host $installDir
 Write-Host ""
