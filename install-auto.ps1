@@ -17,7 +17,6 @@ $files = @(
     "sup/videos.json"
 )
 
-
 Clear-Host
 Write-Host ""
 Write-Host "=========================================" -ForegroundColor Cyan
@@ -41,11 +40,20 @@ foreach ($file in $files) {
 
     try {
         Write-Host "[DOWNLOADING] $file" -ForegroundColor Cyan
-        Invoke-WebRequest -Uri $url -OutFile $destination -UseBasicParsing
+
+        $response = Invoke-WebRequest -Uri $url -OutFile $destination -UseBasicParsing -ErrorAction Stop
+
+        if ($response.StatusCode -ne 200) {
+            throw "HTTP Status: $($response.StatusCode)"
+        }
+
         Write-Host "[OK]" -ForegroundColor Green
     }
     catch {
+        Write-Host ""
         Write-Host "[FAILED] $file" -ForegroundColor Red
+        Write-Host "URL: $url" -ForegroundColor Yellow
+        Write-Host $_.Exception.Message -ForegroundColor Red
         exit 1
     }
 }
@@ -54,12 +62,13 @@ Write-Host ""
 Write-Host "=========================================" -ForegroundColor Cyan
 Write-Host "SUCCESS! Zetonic installed." -ForegroundColor Green
 Write-Host ""
-Write-Host "To load it in Chrome:" -ForegroundColor Yellow
-Write-Host "1. Open Chrome"
-Write-Host "2. Go to chrome://extensions/"
-Write-Host "3. Enable Developer Mode (top right)"
-Write-Host "4. Click 'Load unpacked'"
-Write-Host "5. Select this folder:"
-Write-Host "   $installDir" -ForegroundColor Cyan
+Write-Host "Location:" -ForegroundColor Yellow
+Write-Host "$installDir" -ForegroundColor Cyan
+Write-Host ""
+Write-Host "Load in Chrome:" -ForegroundColor Yellow
+Write-Host "1. Open chrome://extensions/"
+Write-Host "2. Enable Developer Mode"
+Write-Host "3. Click Load unpacked"
+Write-Host "4. Select the Zetonic folder"
 Write-Host "=========================================" -ForegroundColor Cyan
 Write-Host ""
