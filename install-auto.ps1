@@ -22,7 +22,7 @@ Write-Host "===============================" -ForegroundColor Cyan
 Write-Host "           ZETONIC             " -ForegroundColor Cyan
 Write-Host "===============================" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "        Auto-Installer v1.0" -ForegroundColor Yellow
+Write-Host "        Auto-Installer v1.5" -ForegroundColor Yellow
 Write-Host "  Minimalist Anime New Tab Experience" -ForegroundColor Green
 Write-Host ""
 
