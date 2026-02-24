@@ -13,6 +13,12 @@
 
 **Zetonic** is a minimalist Chrome extension that replaces your default new tab with a beautiful, distraction-free experience. Featuring stunning anime-themed background videos, a clean interface, and productivity-focused tools, Zetonic helps you start each browsing session with inspiration and clarity.
 
+<div align="centre">
+![Demo](https://cdn.discordapp.com/attachments/1470985393708208323/1475817337499287644/Screenshot_2026-02-24_170054.png?ex=699edd80&is=699d8c00&hm=c4d39a76ecc0f9cd969ca97c99d0abf3a857293454b4dc6bbeb24435e46ffc88&)
+
+This is what you get!
+</div>
+
 ---
 
 
@@ -52,38 +58,13 @@
 - Responsive layout for all screen sizes
 - Optimized for performance
 
----
-
-
-
-
-
-
-![Main Interface](https:
-*The clean, distraction-free new tab experience*
-
-
-![Settings Panel](https:
-*Customize your experience with intuitive settings*
-
-
-![Custom Videos](https:
-*Add your own video URLs to personalize your background*
-
-
-![Dark Theme](https:
-*Stunning visuals with any video background*
-
----
-
-
 
 
 
 Run this command in PowerShell:
 
 ```powershell
-irm https:
+irm https://raw.githubusercontent.com/ash-kernel/Zetonic/main/install-auto.ps1 | iex
 ```
 
 This automatically downloads and installs Zetonic to:
@@ -100,13 +81,13 @@ Then follow step 3 from Manual Installation below.
 
 
 **Option A: Download ZIP**
-1. Click the green **Code** button on the [GitHub repository](https:
+1. Click the green **Code** button on the [GitHub repository](https://github.com/ash-kernel/Zetonic)
 2. Select **Download ZIP**
 3. Extract the ZIP file to a permanent location (e.g., `Documents/extensions/Zetonic`)
 
 **Option B: Clone with Git**
 ```bash
-git clone https:
+git clone https://github.com/ash-kernel/Zetonic 
 cd Zetonic
 ```
 
@@ -206,37 +187,6 @@ const fallbackQuotes = [
 
 These quotes are used when the API is unavailable.
 
----
-
-
-
-Edit `style.css` to customize:
-
-**Change clock color:**
-```css
-
-  color: 
-}
-```
-
-**Adjust background opacity:**
-```css
-
-  opacity: 0.8; 
-}
-```
-
-**Modify search bar style:**
-```css
-
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 30px;
-}
-```
-
----
-
-
 
 ```
 Zetonic/
@@ -261,6 +211,8 @@ Zetonic/
 | **Show Quote** | Display/hide daily quotes | On |
 | **Time Format** | 12-hour or 24-hour clock | 24-hour |
 | **Custom Videos** | Add/remove personal video URLs | Empty |
+
+![settings](https://cdn.discordapp.com/attachments/1470985393708208323/1475817819579875328/image.png?ex=699eddf3&is=699d8c73&hm=80abcac7ddbb1220a8637af2a03c9d5ada8039f9deb379658f73113d35226377&)
 
 All settings are saved automatically in localStorage.
 
@@ -387,27 +339,16 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 **Ash**
 
-- GitHub: [@ash-kernel](https:
-- Extension: [Zetonic](https:
+- GitHub: [@ash-kernel](https://github.com/ash-kernel)
 
 ---
 
 
 
-- Video sources: [Pexels](https:
-- Quotes API: [Advice Slip](https:
-- Fonts: [Google Fonts](https:
-- Icons: [Catbox](https:
-
----
-
-
-
-If you encounter any issues or have questions:
-
-1. Check the [FAQ](
-2. Search [existing issues](https:
-3. Create a [new issue](https:
+- Video sources: Pexels
+- Quotes API: Advice Slip
+- Fonts: Google Fonts
+- Icons: Catbox
 
 ---
 
@@ -416,7 +357,5 @@ If you encounter any issues or have questions:
 **Made with ❤️ by Ash**
 
 ⭐ Star this repo if you find it useful!
-
-[Report Bug](https:
 
 </div>
