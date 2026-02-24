@@ -23,13 +23,13 @@ async function loadVideos() {
       videos = [...videos, ...userVideos];
     }
     
-    // Shuffle and play random video
+    
     currentIndex = Math.floor(Math.random() * videos.length);
     await playVideo(currentIndex);
     
   } catch (error) {
     console.error("Video loading error:", error);
-    // Fallback: try to use only user videos
+    
     const userVideos = getUserVideos();
     if (userVideos.length > 0) {
       videos = userVideos;
@@ -39,9 +39,8 @@ async function loadVideos() {
   }
 }
 
-/**
- * Play video at specific index with error handling
- */
+
+
 async function playVideo(index) {
   try {
     video.src = videos[index];
@@ -51,9 +50,7 @@ async function playVideo(index) {
   }
 }
 
-/**
- * Get user-added videos from localStorage
- */
+
 function getUserVideos() {
   try {
     const stored = localStorage.getItem("zetonicUserVideos");
@@ -66,9 +63,6 @@ function getUserVideos() {
   }
 }
 
-/**
- * Save user videos to localStorage
- */
 function saveUserVideos(videoList) {
   try {
     localStorage.setItem("zetonicUserVideos", JSON.stringify(videoList));
@@ -77,9 +71,7 @@ function saveUserVideos(videoList) {
   }
 }
 
-/**
- * Add a new user video URL
- */
+
 function addUserVideo(url) {
   if (!isValidVideoUrl(url)) {
     return { success: false, message: "Invalid video URL" };
@@ -87,7 +79,7 @@ function addUserVideo(url) {
   
   const userVideos = getUserVideos();
   
-  // Check for duplicates
+  
   if (userVideos.includes(url)) {
     return { success: false, message: "Video already exists" };
   }
@@ -95,37 +87,31 @@ function addUserVideo(url) {
   userVideos.push(url);
   saveUserVideos(userVideos);
   
-  // Add to current videos array
+  
   videos.push(url);
   
   return { success: true, message: "Video added successfully!" };
 }
 
-/**
- * Remove a user video URL
- */
+
 function removeUserVideo(url) {
   const userVideos = getUserVideos();
   const filtered = userVideos.filter(v => v !== url);
   saveUserVideos(filtered);
   
-  // Reload videos to reflect changes
   loadVideos();
 }
 
-/**
- * Validate video URL
- */
+
 function isValidVideoUrl(url) {
   try {
     const parsed = new URL(url);
-    // Check for common video extensions or streaming services
+   
     const validExtensions = ['.mp4', '.webm', '.ogg', '.mov'];
     const hasValidExtension = validExtensions.some(ext => 
       parsed.pathname.toLowerCase().endsWith(ext)
     );
     
-    // Allow URLs from known video hosting services
     const validHosts = ['pexels.com', 'pixabay.com', 'catbox.moe', 'youtube.com', 'vimeo.com'];
     const isKnownHost = validHosts.some(host => parsed.hostname.includes(host));
     
@@ -136,15 +122,15 @@ function isValidVideoUrl(url) {
   }
 }
 
-// Initialize video loading
+
 loadVideos();
 
-// Handle video end - play next random video
+
 video.addEventListener("ended", () => {
   if (!videos.length) return;
   
   let nextIndex;
-  // Ensure we don't repeat the same video
+  
   do {
     nextIndex = Math.floor(Math.random() * videos.length);
   } while (nextIndex === currentIndex && videos.length > 1);
@@ -153,19 +139,16 @@ video.addEventListener("ended", () => {
   playVideo(currentIndex);
 });
 
-// Handle video errors
+
 video.addEventListener("error", (e) => {
   console.error("Video error:", e);
-  // Try next video if current one fails
+
   if (videos.length > 1) {
     currentIndex = (currentIndex + 1) % videos.length;
     playVideo(currentIndex);
   }
 });
 
-// ============================================================================
-// SETTINGS MANAGEMENT
-// ============================================================================
 
 let settings = {
   showClock: true,
@@ -173,9 +156,7 @@ let settings = {
   format24: true
 };
 
-/**
- * Load settings from localStorage
- */
+
 function loadSettings() {
   try {
     const saved = localStorage.getItem("zetonicSettings");
@@ -187,9 +168,7 @@ function loadSettings() {
   }
 }
 
-/**
- * Save settings to localStorage
- */
+
 function saveSettings() {
   try {
     localStorage.setItem("zetonicSettings", JSON.stringify(settings));
@@ -198,19 +177,12 @@ function saveSettings() {
   }
 }
 
-// Load settings on startup
-loadSettings();
 
-// ============================================================================
-// CLOCK & DATE
-// ============================================================================
+loadSettings();
 
 const timeEl = document.getElementById("time");
 const dateEl = document.getElementById("date");
 
-/**
- * Update time display based on settings
- */
 function updateTime() {
   if (!settings.showClock) {
     timeEl.style.display = "none";
@@ -243,13 +215,8 @@ function updateTime() {
   });
 }
 
-// Update time every second
 setInterval(updateTime, 1000);
 updateTime();
-
-// ============================================================================
-// SEARCH FUNCTIONALITY
-// ============================================================================
 
 const searchInput = document.querySelector("#searchContainer input");
 const googleLogo = document.getElementById("googleLogo");
@@ -271,10 +238,6 @@ searchInput.addEventListener("blur", () => {
   googleLogo.style.transform = "scale(1)";
 });
 
-// ============================================================================
-// QUOTES
-// ============================================================================
-
 const quoteEl = document.getElementById("quote");
 
 const fallbackQuotes = [
@@ -288,9 +251,6 @@ const fallbackQuotes = [
   "Every moment is a fresh beginning."
 ];
 
-/**
- * Load and display random quote
- */
 async function loadQuote() {
   if (!settings.showQuote) {
     quoteEl.style.display = "none";
@@ -306,17 +266,13 @@ async function loadQuote() {
     const data = await response.json();
     quoteEl.textContent = `"${data.slip.advice}"`;
   } catch (error) {
-    // Use fallback quote
+    
     const randomQuote = fallbackQuotes[Math.floor(Math.random() * fallbackQuotes.length)];
     quoteEl.textContent = `"${randomQuote}"`;
   }
 }
 
 loadQuote();
-
-// ============================================================================
-// SETTINGS PANEL
-// ============================================================================
 
 const settingsBtn = document.getElementById("settingsBtn");
 const settingsPanel = document.getElementById("settingsPanel");
@@ -328,12 +284,10 @@ const addVideoBtn = document.getElementById("addVideoBtn");
 const videoFeedback = document.getElementById("videoFeedback");
 const userVideosList = document.getElementById("userVideosList");
 
-// Initialize settings UI
 toggleClock.checked = settings.showClock;
 toggleQuote.checked = settings.showQuote;
 timeFormat.value = settings.format24 ? "24" : "12";
 
-// Toggle settings panel
 settingsBtn.addEventListener("click", () => {
   const isVisible = settingsPanel.style.display === "flex";
   settingsPanel.style.display = isVisible ? "none" : "flex";
@@ -343,35 +297,30 @@ settingsBtn.addEventListener("click", () => {
   }
 });
 
-// Close settings when clicking outside
 document.addEventListener("click", (e) => {
   if (!settingsPanel.contains(e.target) && e.target !== settingsBtn) {
     settingsPanel.style.display = "none";
   }
 });
 
-// Clock toggle
 toggleClock.addEventListener("change", function() {
   settings.showClock = this.checked;
   saveSettings();
   updateTime();
 });
 
-// Quote toggle
 toggleQuote.addEventListener("change", function() {
   settings.showQuote = this.checked;
   saveSettings();
   loadQuote();
 });
 
-// Time format toggle
 timeFormat.addEventListener("change", function() {
   settings.format24 = this.value === "24";
   saveSettings();
   updateTime();
 });
 
-// Add video button
 addVideoBtn.addEventListener("click", () => {
   const url = addVideoInput.value.trim();
   
@@ -391,16 +340,12 @@ addVideoBtn.addEventListener("click", () => {
   }
 });
 
-// Allow Enter key to add video
 addVideoInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     addVideoBtn.click();
   }
 });
 
-/**
- * Show feedback message
- */
 function showFeedback(message, type) {
   videoFeedback.textContent = message;
   videoFeedback.className = `feedback ${type}`;
@@ -411,9 +356,6 @@ function showFeedback(message, type) {
   }, 3000);
 }
 
-/**
- * Display list of user-added videos
- */
 function displayUserVideos() {
   const userVideos = getUserVideos();
   
@@ -428,8 +370,7 @@ function displayUserVideos() {
       <button class="remove-btn" data-url="${url}">✕</button>
     </div>
   `).join("");
-  
-  // Add remove button listeners
+
   document.querySelectorAll(".remove-btn").forEach(btn => {
     btn.addEventListener("click", function() {
       const url = this.getAttribute("data-url");
@@ -442,9 +383,6 @@ function displayUserVideos() {
   });
 }
 
-/**
- * Truncate URL for display
- */
 function truncateUrl(url, maxLength = 35) {
   if (url.length <= maxLength) return url;
   return url.substring(0, maxLength) + "...";
