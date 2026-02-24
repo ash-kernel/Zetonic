@@ -1,8 +1,18 @@
+#Requires -Version 5.1
+<#
+.SYNOPSIS
+    Zetonic Enhanced Installer - Minimalist Anime New Tab Extension
+.DESCRIPTION
+    Beautiful PowerShell installer with progress tracking, animations, and enhanced error handling
+.NOTES
+    Version: 2.0
+    Author: Enhanced by Claude
+#>
 
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 
-
+# Configuration
 $repo = "ash-kernel/Zetonic"
 $branch = "main"
 $baseUrl = "https://raw.githubusercontent.com/$repo/$branch"
@@ -20,6 +30,7 @@ $files = @(
     "sup/icon-banner.png"
 )
 
+# Color scheme
 $colors = @{
     Primary = "Cyan"
     Success = "Green"
@@ -29,7 +40,7 @@ $colors = @{
     Accent = "DarkCyan"
 }
 
-
+# ASCII Art Banner
 function Show-Banner {
     Clear-Host
     Write-Host ""
@@ -46,7 +57,7 @@ function Show-Banner {
     Write-Host ""
 }
 
-
+# Animated progress bar
 function Show-Progress {
     param(
         [int]$Current,
@@ -66,14 +77,14 @@ function Show-Progress {
     Write-Host -NoNewline "] $percent% - $Status"
 }
 
-
+# Check prerequisites
 function Test-Prerequisites {
     Write-Host "  ╔════════════════════════════════════════════╗" -ForegroundColor $colors.Primary
     Write-Host "  ║        Checking System Requirements        ║" -ForegroundColor $colors.Primary
     Write-Host "  ╚════════════════════════════════════════════╝" -ForegroundColor $colors.Primary
     Write-Host ""
     
-
+    # Check PowerShell version
     Write-Host "  → PowerShell Version: " -NoNewline -ForegroundColor $colors.Accent
     if ($PSVersionTable.PSVersion.Major -ge 5) {
         Write-Host "✓ $($PSVersionTable.PSVersion)" -ForegroundColor $colors.Success
@@ -82,7 +93,7 @@ function Test-Prerequisites {
         return $false
     }
     
-
+    # Check internet connection
     Write-Host "  → Internet Connection: " -NoNewline -ForegroundColor $colors.Accent
     try {
         $null = Test-Connection -ComputerName "github.com" -Count 1 -ErrorAction Stop
@@ -92,7 +103,7 @@ function Test-Prerequisites {
         return $false
     }
     
-
+    # Check write permissions
     Write-Host "  → Write Permissions: " -NoNewline -ForegroundColor $colors.Accent
     try {
         $testPath = Join-Path ([System.IO.Path]::GetTempPath()) "zetonic-test.tmp"
@@ -108,7 +119,7 @@ function Test-Prerequisites {
     return $true
 }
 
-
+# Create installation directory
 function Initialize-InstallDirectory {
     Write-Host "  ╔════════════════════════════════════════════╗" -ForegroundColor $colors.Primary
     Write-Host "  ║          Preparing Installation            ║" -ForegroundColor $colors.Primary
@@ -155,7 +166,7 @@ function Initialize-InstallDirectory {
     Write-Host ""
 }
 
-
+# Download files with progress
 function Install-Files {
     param([string]$Mode)
     
@@ -175,12 +186,12 @@ function Install-Files {
         $destination = Join-Path $installDir $file
         $folder = Split-Path $destination -Parent
         
-      
+        # Create subdirectories
         if (-not (Test-Path $folder)) {
             New-Item -ItemType Directory -Path $folder -Force | Out-Null
         }
         
-      
+        # Skip if update mode and file exists
         if ($Mode -eq "update" -and (Test-Path $destination)) {
             Show-Progress -Current ($i + 1) -Total $files.Count -Status "Skipped: $file"
             Write-Host ""
@@ -228,7 +239,7 @@ function Install-Files {
     return $true
 }
 
-
+# Show completion message with instructions
 function Show-Completion {
     Write-Host ""
     Write-Host "  ╔════════════════════════════════════════════╗" -ForegroundColor $colors.Success
@@ -273,7 +284,7 @@ function Show-Completion {
     Write-Host ""
 }
 
-
+# Main execution
 try {
     Show-Banner
     
