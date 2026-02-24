@@ -14,6 +14,7 @@
 **Zetonic** is a minimalist Chrome extension that replaces your default new tab with a beautiful, distraction-free experience. Featuring stunning anime-themed background videos, a clean interface, and productivity-focused tools, Zetonic helps you start each browsing session with inspiration and clarity.
 
 <div align="centre">
+
 ![Demo](https://cdn.discordapp.com/attachments/1470985393708208323/1475817337499287644/Screenshot_2026-02-24_170054.png?ex=699edd80&is=699d8c00&hm=c4d39a76ecc0f9cd969ca97c99d0abf3a857293454b4dc6bbeb24435e46ffc88&)
 
 This is what you get!
@@ -143,9 +144,9 @@ Make sure the extracted/cloned folder contains these files:
 **Supported formats:** `.mp4`, `.webm`, `.ogg`, `.mov`
 
 **Recommended sources:**
-- [Pexels Videos](https:
-- [Pixabay Videos](https:
-- [Catbox.moe](https:
+- [Pexels Videos](https://pixabay.com/)
+- [Pixabay Videos](https://pixabay.com/)
+- [Catbox.moe](https://catbox.moe/)
 - Direct URLs from your own hosting
 
 **Example URL:**
