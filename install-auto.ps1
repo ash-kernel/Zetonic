@@ -28,7 +28,7 @@ Write-Host "        Auto-Installer v1.5" -ForegroundColor Yellow
 Write-Host "  Minimalist Anime New Tab Experience" -ForegroundColor Green
 Write-Host ""
 
-# Create install directory
+
 Write-Host "→ Setting up installation folder..." -ForegroundColor Cyan
 if (-not (Test-Path $installDir)) {
     New-Item -ItemType Directory -Path $installDir -Force | Out-Null
@@ -37,7 +37,7 @@ if (-not (Test-Path $installDir)) {
     Write-Host "✓ Folder exists: $installDir" -ForegroundColor Green
 }
 
-# Download files
+
 Write-Host ""
 Write-Host "→ Downloading extension files..." -ForegroundColor Cyan
 
