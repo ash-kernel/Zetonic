@@ -1,95 +1,148 @@
-
+/* RESET & FONTS */
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
-html, body {
-  height: 100%;
-  font-family: system-ui, sans-serif;
-  color: white;
+body {
+  height: 100vh;
   overflow: hidden;
+  background: black;
+  color: white;
+  font-family: 'Sora', sans-serif; /* For clock and main text */
 }
 
-
+/* VIDEO */
 #bg {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  z-index: -2;
-}
-
-#overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.35);
   z-index: -1;
 }
 
-
-#timeContainer {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+/* MAIN CONTENT */
+#mainContent {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
   text-align: center;
-  z-index: 5;
 }
 
+/* CLOCK */
 #time {
-  font-size: 88px;
-  font-weight: 600;
-  transition: opacity 0.3s;
+  font-size: 72px;
+  font-weight: 700;   /* Bold geometric */
+  letter-spacing: 2px;
 }
 
+/* DATE */
 #date {
-  margin-top: 10px;
   font-size: 18px;
+  font-weight: 600;
   opacity: 0.85;
 }
 
-
+/* SEARCH */
 #searchContainer {
-  position: absolute;
-  top: 10%;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   align-items: center;
-  gap: 10px;
-  z-index: 5;
+  backdrop-filter: blur(12px);
+  background: rgba(0,0,0,0.35);
+  padding: 10px 16px;
+  border-radius: 28px;
+  width: 300px;
+  transition: width 0.3s ease;
+}
+
+#searchContainer:hover {
+  width: 360px;
 }
 
 #googleLogo {
-  height: 30px;
-  transition: transform 0.3s;
+  width: 20px;
+  margin-right: 10px;
+  transition: transform 0.2s ease;
 }
 
 #searchContainer input {
-  padding: 10px 14px;
-  border-radius: 12px;
+  background: transparent;
   border: none;
-  background: rgba(255,255,255,0.15);
-  color: white;
   outline: none;
-  width: 300px;
-  transition: width 0.3s;
+  color: white;
+  width: 100%;
+  font-size: 15px;
+  font-weight: 600; /* Bold for input text */
 }
 
-#searchContainer input:focus {
-  width: 400px;
-}
-
-
-/* Quote */
+/* QUOTE */
 #quote {
-  position: absolute;
-  bottom: 5%;
-  left: 50%;
-  transform: translateX(-50%);
+  font-family: 'Inter', sans-serif; /* Normal clean font for quotes */
   font-size: 16px;
-  opacity: 0.8;
-  text-align: center;
+  font-weight: 400;
   max-width: 600px;
+  opacity: 0.9;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* SETTINGS BUTTON */
+#settingsBtn {
+  position: fixed;
+  top: 20px;
+  right: 25px;
+  font-size: 22px;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 1000;
+  color: white;
+  transition: transform 0.2s ease;
+}
+
+#settingsBtn:hover {
+  transform: rotate(30deg);
+}
+
+/* SETTINGS PANEL */
+#settingsPanel {
+  position: fixed;
+  top: 60px;
+  right: 25px;
+  width: 230px;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 1000;
+}
+
+#settingsPanel h3 {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+#settingsPanel label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#settingsPanel select {
+  background: #111;
+  color: white;
+  border: none;
+  padding: 6px;
+  border-radius: 6px;
+  font-weight: 500;
 }

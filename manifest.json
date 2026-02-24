@@ -2,10 +2,11 @@
   "manifest_version": 3,
   "name": "Zetonic",
   "description": "Minimalist anime scenery new tab with bold time display. Streams high-quality videos with random quotes.",
-  "version": "1.0",
+  "version": "2.0",
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
+  "permissions": ["storage"],
   "host_permissions": [
     "https://api.adviceslip.com/*",
     "https://raw.githubusercontent.com/*"
