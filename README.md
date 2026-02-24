@@ -2,16 +2,9 @@
 
 <div align="center">
 
-![Zetonic Banner](https:
+![Zetonic Banner](https://cdn.discordapp.com/attachments/1470985393708208323/1471048403046895649/readmebanner.png?ex=699ea796&is=699d5616&hm=dc4a03e1cf60905fea2a7bf336070d050d52bf5c755462e51ac42b4f6b44ab7c&)
 
 **Transform your browser's new tab into a serene, anime-inspired experience**
-
-[![License: MIT](https:
-[![Chrome Extension](https:
-[![Version](https:
-
-[Features](
-
 </div>
 
 ---
