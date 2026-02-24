@@ -13,8 +13,9 @@ $files = @(
     "style.css",
     "manifest.json",
     "icon.png",
-    "sup/videos.json"
-    "sup/g-logo.png"
+    "sup/videos.json",
+    "sup/g-logo.png",
+    "sup/icon-banner.png"
 )
 
 Clear-Host
