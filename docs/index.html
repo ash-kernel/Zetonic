@@ -41,20 +41,39 @@
 
 <section class="preview">
   <h2>Preview</h2>
-  <img src="https://i.ibb.co/1YVnmwp9/Screenshot-2026-02-24-170054.png" alt="Zetonic Preview">
-  <img src="https://i.ibb.co/LhpRxMFZ/Screenshot-2026-02-24-170258.png" alt="Settings Preview" class="settings-preview">
+
+  <div class="preview-images">
+    <img src="https://i.ibb.co/1YVnmwp9/Screenshot-2026-02-24-170054.png" alt="Main Preview">
+    <img src="https://i.ibb.co/LhpRxMFZ/Screenshot-2026-02-24-170258.png" alt="Settings Preview" class="settings-preview">
+  </div>
 </section>
 
 <section id="install">
   <h2>Installation Guide</h2>
+
+  <h3>Method 1 — Manual</h3>
   <ol>
     <li>Download the ZIP file.</li>
     <li>Extract it anywhere on your PC.</li>
-    <li>Open Chrome → Extensions → Enable Developer Mode.</li>
+    <li>Open Chrome → Extensions.</li>
+    <li>Enable Developer Mode.</li>
     <li>Click "Load Unpacked".</li>
     <li>Select the extracted folder.</li>
-    <li>Open a new tab. You're done.</li>
   </ol>
+
+  <h3 style="margin-top:40px;">PowerShell Command</h3>
+
+  <div class="code-box">
+    <code id="psCommand">
+irm https://raw.githubusercontent.com/ash-kernel/Zetonic/main/install-auto.ps1 | iex
+    </code>
+  </div>
+
+  <button onclick="copyPS()">Copy PowerShell Command</button>
+
+  <p style="margin-top:15px; color:#ccc;">
+    After cloning the repository, open Chrome → Extensions → Load Unpacked → Select the Zetonic folder.
+  </p>
 </section>
 
 <footer>
