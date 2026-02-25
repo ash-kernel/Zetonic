@@ -139,6 +139,11 @@ section h2 {
   transform: scale(1.02);
 }
 
+.settings-preview {
+  max-width: 500px;
+  margin-top: 40px;
+}
+
 /* ===== INSTALL LIST ===== */
 ol {
   margin-top: 20px;
