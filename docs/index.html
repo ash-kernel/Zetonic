@@ -1,63 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Zetonic • Minimalist Anime New Tab</title>
+  <title>Zetonic • Minimal Anime New Tab</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0d0d0d;
-      color: #f2f2f2;
-      text-align: center;
-      padding: 60px 20px;
-    }
-    h1 { font-size: 3rem; margin-bottom: 15px; }
-    p { font-size: 1.2rem; }
-    .btn {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 12px 25px;
-      background: #1db954;
-      color: #000;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-      font-size: 1rem;
-    }
-    .features {
-      margin-top: 40px;
-      text-align: left;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .features li {
-      margin-bottom: 8px;
-      font-size: 1.1rem;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h1>Zetonic</h1>
-  <p>A clean, minimalist anime-style new tab experience for Chrome.</p>
+<nav>
+  <div class="logo">Zetonic</div>
+  <div class="links">
+    <a href="features.html">Features</a>
+    <a href="#install">Install</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="license.html">License</a>
+  </div>
+</nav>
 
-  <a class="btn" href="https://github.com/ash-kernel/Zetonic" target="_blank">
-    View on GitHub
-  </a>
+<header>
+  <h1>Minimal. Clean. Distraction-Free.</h1>
+  <p>A modern anime-style Chrome new tab experience.</p>
+  <div class="buttons">
+    <a href="https://github.com/ash-kernel/Zetonic/archive/refs/heads/main.zip" class="primary">Download ZIP</a>
+    <button onclick="copyCommand()">Copy PowerShell Install</button>
+  </div>
+</header>
 
-  <ul class="features">
-    <li>🎥 Streamed animated backgrounds</li>
-    <li>🕒 Live clock & date</li>
-    <li>🔍 Quick Google search</li>
-    <li>💡 Random inspirational quotes</li>
-    <li>⚡ Lightweight & distraction-free</li>
-  </ul>
+<section id="install">
+  <h2>Installation Guide</h2>
+  <ol>
+    <li>Download the ZIP file.</li>
+    <li>Extract it anywhere on your PC.</li>
+    <li>Open Chrome → Extensions → Enable Developer Mode.</li>
+    <li>Click "Load Unpacked" and select the extracted folder.</li>
+    <li>Done. Open a new tab.</li>
+  </ol>
+</section>
 
-  <footer style="margin-top:50px; font-size:0.9rem;">
-    MIT Licensed • Developed by Ash
-  </footer>
+<footer>
+  © 2026 Zetonic • Developed by Ash
+</footer>
+
+<script>
+function copyCommand() {
+  const cmd = "git clone https://github.com/ash-kernel/Zetonic.git";
+  navigator.clipboard.writeText(cmd);
+  alert("PowerShell command copied!");
+}
+</script>
 
 </body>
 </html>

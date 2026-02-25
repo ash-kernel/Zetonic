@@ -1,0 +1,96 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #0f1117;
+  color: #ffffff;
+  line-height: 1.6;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 10%;
+  background: #0d0f14;
+  position: sticky;
+  top: 0;
+}
+
+nav a {
+  color: #bbb;
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+nav a:hover {
+  color: white;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+header {
+  text-align: center;
+  padding: 100px 20px;
+}
+
+header h1 {
+  font-size: 2.8rem;
+  margin-bottom: 10px;
+}
+
+header p {
+  color: #aaa;
+  margin-bottom: 30px;
+}
+
+.buttons a,
+button {
+  padding: 12px 20px;
+  margin: 10px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.primary {
+  background: #4f8cff;
+  color: white;
+  text-decoration: none;
+}
+
+button {
+  background: #1f232d;
+  color: white;
+}
+
+section {
+  padding: 60px 10%;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+ol li {
+  margin-bottom: 10px;
+}
+
+footer {
+  text-align: center;
+  padding: 40px;
+  color: #777;
+}
+
+@media(max-width:768px){
+  nav {
+    flex-direction: column;
+    text-align: center;
+  }
+  .links {
+    margin-top: 10px;
+  }
+}
