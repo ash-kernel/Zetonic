@@ -15,6 +15,10 @@
     "storage",
     "geolocation"
   ],
+    "host_permissions": [
+    "https://api.adviceslip.com/*",
+    "https://raw.githubusercontent.com/*"
+  ],
   "background": {
     "service_worker": "service-worker.js"
   },
