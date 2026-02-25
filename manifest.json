@@ -1,28 +1,23 @@
 {
   "manifest_version": 3,
-  "name": "Zetonic Ultimate - New Tab",
-  "version": "3.0.0",
-  "description": "The ultimate new tab experience with productivity tools, themes, and customization",
-  "icons": {
-    "16": "icon-16.png",
-    "48": "icon-48.png",
-    "128": "icon-128.png"
-  },
+  "name": "Zetonic",
+  "description": "Minimalist anime scenery new tab with bold time display. Streams high-quality videos with random quotes.",
+  "version": "3.0",
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
-  "permissions": [
-    "storage",
-    "geolocation"
-  ],
-    "host_permissions": [
+  "permissions": ["storage"],
+  "host_permissions": [
     "https://api.adviceslip.com/*",
     "https://raw.githubusercontent.com/*"
   ],
-  "background": {
-    "service_worker": "service-worker.js"
-  },
-  "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'"
+  "web_accessible_resources": [
+    {
+      "resources": ["sup/videos.json"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "icons": {
+    "128": "icon.png"
   }
 }
