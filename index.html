@@ -3,117 +3,232 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zetonic - New Tab</title>
-
-  
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400&display=swap" rel="stylesheet">
-
+  <title>Zetonic - Ultimate Edition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  
   <video id="bg" autoplay muted loop playsinline></video>
+  <canvas id="particleCanvas"></canvas>
+  <div id="gradientBg"></div>
 
-  
-  <div id="settingsBtn" title="Settings">⚙</div>
-
-  <!-- Weather Widget -->
-  <div id="weatherWidget">
-    <div class="weather-icon">🌤️</div>
-    <div class="weather-info">
-      <div class="weather-temp">--°</div>
-      <div class="weather-desc">Loading...</div>
-      <div class="weather-location">📍 --</div>
+  <div id="achievementToast" class="achievement-toast">
+    <div class="achievement-icon">🏆</div>
+    <div class="achievement-content">
+      <div class="achievement-title"></div>
+      <div class="achievement-desc"></div>
     </div>
   </div>
 
-  
-  <div id="settingsPanel">
-    <h3>⚙ Zetonic Settings</h3>
-
-    
-    <div class="settings-section">
-      <h4>Display</h4>
-      
-      <label>
-        <span>Show Clock</span>
-        <input type="checkbox" id="toggleClock">
-      </label>
-
-      <label>
-        <span>Show Quote</span>
-        <input type="checkbox" id="toggleQuote">
-      </label>
-
-      <label>
-        <span>Show Weather</span>
-        <input type="checkbox" id="toggleWeather">
-      </label>
-
-      <label>
-        <span>Time Format</span>
-        <select id="timeFormat">
-          <option value="24">24 Hour</option>
-          <option value="12">12 Hour</option>
-        </select>
-      </label>
+  <div id="topBar">
+    <div id="weatherWidget">
+      <div class="weather-icon">🌤️</div>
+      <div class="weather-info">
+        <div class="weather-temp">--°</div>
+        <div class="weather-desc">Loading...</div>
+      </div>
     </div>
 
-    
-    <div class="settings-section">
-      <h4>Custom Videos</h4>
-      
-      <!-- URL Input -->
-      <div class="add-video-container">
-        <input 
-          type="text" 
-          id="addVideoInput" 
-          placeholder="Paste video URL here..."
-          autocomplete="off"
-        >
-        <button id="addVideoBtn" title="Add Video URL">+</button>
+    <div id="quickLinks" class="quick-links">
+      <div class="quick-link add-link" data-action="addLink">
+        <div class="link-icon">+</div>
       </div>
-      
-      <!-- Local File Upload -->
-      <div class="upload-video-container">
-        <label for="uploadVideoInput" class="upload-label">
-          📁 Upload Local Video
-        </label>
-        <input 
-          type="file" 
-          id="uploadVideoInput" 
-          accept="video/mp4,video/webm,video/ogg"
-          style="display: none;"
-        >
-      </div>
-      
-      <div id="videoFeedback" class="feedback"></div>
-      
-      <div id="userVideosList" class="videos-list">
-        
-      </div>
-      
-      <p class="video-hint">💡 Supported: .mp4, .webm, .ogg from URLs or local files</p>
+    </div>
+
+    <div id="topBarRight">
+      <div id="pomodoroWidget" class="widget-icon" title="Focus Mode">🍅</div>
+      <div id="achievementsBtn" class="widget-icon" title="Achievements">🏆</div>
+      <div id="analyticsBtn" class="widget-icon" title="Analytics">📊</div>
+      <div id="settingsBtn" class="widget-icon" title="Settings">⚙️</div>
     </div>
   </div>
 
-  
   <div id="mainContent">
+    <div id="greeting" class="greeting"></div>
     <div id="time">00:00:00</div>
     <div id="date">Loading date...</div>
 
     <div id="searchContainer">
-      <img id="googleLogo" src="sup/g-logo.png" alt="Google" onerror="this.style.display='none'">
-      <input 
-        type="text" 
-        placeholder="Search Google..." 
-        autocomplete="off"
-        spellcheck="false"
-      >
+      <img id="googleLogo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 272 92'%3E%3Cpath fill='%234285F4' d='M115.75 47.18c0 12.77-9.99 22.18-22.25 22.18s-22.25-9.41-22.25-22.18C71.25 34.32 81.24 25 93.5 25s22.25 9.32 22.25 22.18zm-9.74 0c0-7.98-5.79-13.44-12.51-13.44S80.99 39.2 80.99 47.18c0 7.9 5.79 13.44 12.51 13.44s12.51-5.55 12.51-13.44z'/%3E%3Cpath fill='%23EA4335' d='M163.75 47.18c0 12.77-9.99 22.18-22.25 22.18s-22.25-9.41-22.25-22.18c0-12.85 9.99-22.18 22.25-22.18s22.25 9.32 22.25 22.18zm-9.74 0c0-7.98-5.79-13.44-12.51-13.44s-12.51 5.46-12.51 13.44c0 7.9 5.79 13.44 12.51 13.44s12.51-5.55 12.51-13.44z'/%3E%3Cpath fill='%23FBBC05' d='M209.75 26.34v39.82c0 16.38-9.66 23.07-21.08 23.07-10.75 0-17.22-7.19-19.66-13.07l8.48-3.53c1.51 3.61 5.21 7.87 11.17 7.87 7.31 0 11.84-4.51 11.84-13v-3.19h-.34c-2.18 2.69-6.38 5.04-11.68 5.04-11.09 0-21.25-9.66-21.25-22.09 0-12.52 10.16-22.26 21.25-22.26 5.29 0 9.49 2.35 11.68 4.96h.34v-3.61h9.25zm-8.56 20.92c0-7.81-5.21-13.52-11.84-13.52-6.72 0-12.35 5.71-12.35 13.52 0 7.73 5.63 13.36 12.35 13.36 6.63 0 11.84-5.63 11.84-13.36z'/%3E%3Cpath fill='%234285F4' d='M225 3v65h-9.5V3h9.5z'/%3E%3Cpath fill='%2334A853' d='M262.02 54.48l7.56 5.04c-2.44 3.61-8.32 9.83-18.48 9.83-12.6 0-22.01-9.74-22.01-22.18 0-13.19 9.49-22.18 20.92-22.18 11.51 0 17.14 9.16 18.98 14.11l1.01 2.52-29.65 12.28c2.27 4.45 5.8 6.72 10.75 6.72 4.96 0 8.4-2.44 10.92-6.14zm-23.27-7.98l19.82-8.23c-1.09-2.77-4.37-4.7-8.23-4.7-4.95 0-11.84 4.37-11.59 12.93z'/%3E%3Cpath fill='%23EA4335' d='M35.29 41.41V32H67c.31 1.64.47 3.58.47 5.68 0 7.06-1.93 15.79-8.15 22.01-6.05 6.3-13.78 9.66-24.02 9.66C16.32 69.35.36 53.89.36 34.91.36 15.93 16.32.47 35.3.47c10.5 0 17.98 4.12 23.6 9.49l-6.64 6.64c-4.03-3.78-9.49-6.72-16.97-6.72-13.86 0-24.7 11.17-24.7 25.03 0 13.86 10.84 25.03 24.7 25.03 8.99 0 14.11-3.61 17.39-6.89 2.66-2.66 4.41-6.46 5.1-11.65l-22.49.01z'/%3E%3C/svg%3E" alt="Google">
+      <input type="text" placeholder="Search Google..." autocomplete="off" spellcheck="false">
     </div>
 
     <div id="quote">Your motivational quote appears here.</div>
+
+    <div id="moodTracker" class="mood-tracker">
+      <div class="mood-label">How are you feeling?</div>
+      <div class="mood-options">
+        <button class="mood-btn" data-mood="happy">😊</button>
+        <button class="mood-btn" data-mood="neutral">😐</button>
+        <button class="mood-btn" data-mood="sad">😢</button>
+        <button class="mood-btn" data-mood="angry">😤</button>
+        <button class="mood-btn" data-mood="tired">😴</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="commandPalette" class="command-palette">
+    <input type="text" placeholder="Type a command..." id="commandInput" autocomplete="off">
+    <div id="commandResults" class="command-results"></div>
+  </div>
+
+  <div id="settingsPanel" class="panel">
+    <div class="panel-header">
+      <h3>⚙️ Settings</h3>
+      <button class="close-btn" data-close="settingsPanel">×</button>
+    </div>
+    <div class="panel-content">
+      
+      <div class="settings-section">
+        <h4>Display</h4>
+        <label><span>Show Clock</span><input type="checkbox" id="toggleClock"></label>
+        <label><span>Show Date</span><input type="checkbox" id="toggleDate"></label>
+        <label><span>Show Quote</span><input type="checkbox" id="toggleQuote"></label>
+        <label><span>Show Weather</span><input type="checkbox" id="toggleWeather"></label>
+        <label><span>Show Greeting</span><input type="checkbox" id="toggleGreeting"></label>
+        <label><span>Show Mood Tracker</span><input type="checkbox" id="toggleMood"></label>
+        <label><span>Time Format</span><select id="timeFormat"><option value="24">24 Hour</option><option value="12">12 Hour</option></select></label>
+      </div>
+
+      <div class="settings-section">
+        <h4>Theme</h4>
+        <div class="theme-selector">
+          <button class="theme-btn" data-theme="anime">Anime</button>
+          <button class="theme-btn" data-theme="cyberpunk">Cyberpunk</button>
+          <button class="theme-btn" data-theme="minimal">Minimal</button>
+          <button class="theme-btn" data-theme="nature">Nature</button>
+          <button class="theme-btn" data-theme="retro">Retro</button>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <h4>Background</h4>
+        <label><span>Mode</span><select id="bgMode"><option value="video">Video</option><option value="particles">Particles</option><option value="gradient">Gradient</option></select></label>
+        <div id="particleSettings" class="sub-settings">
+          <label><span>Type</span><select id="particleType"><option value="snow">Snow</option><option value="stars">Stars</option><option value="bubbles">Bubbles</option></select></label>
+          <label><span>Density</span><input type="range" id="particleDensity" min="10" max="200" value="50"></label>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <h4>Videos</h4>
+        <div class="add-video-container">
+          <input type="text" id="addVideoInput" placeholder="Paste video URL..." autocomplete="off">
+          <button id="addVideoBtn">+</button>
+        </div>
+        <label class="upload-label" for="uploadVideoInput">📁 Upload Local Video</label>
+        <input type="file" id="uploadVideoInput" accept="video/*" style="display:none;">
+        <div id="videoFeedback" class="feedback"></div>
+        <div id="userVideosList" class="videos-list"></div>
+      </div>
+
+      <div class="settings-section">
+        <h4>Data</h4>
+        <button id="exportBtn" class="action-btn">Export Settings</button>
+        <button id="importBtn" class="action-btn">Import Settings</button>
+        <button id="resetBtn" class="action-btn danger">Reset All</button>
+        <input type="file" id="importInput" accept=".json" style="display:none;">
+      </div>
+    </div>
+  </div>
+
+  <div id="pomodoroPanel" class="panel">
+    <div class="panel-header">
+      <h3>🍅 Focus Mode</h3>
+      <button class="close-btn" data-close="pomodoroPanel">×</button>
+    </div>
+    <div class="panel-content">
+      <div class="pomodoro-display">
+        <div class="pomodoro-time">25:00</div>
+        <div class="pomodoro-label">Focus Time</div>
+      </div>
+      <div class="pomodoro-controls">
+        <button id="pomodoroStart" class="pomo-btn">Start</button>
+        <button id="pomodoroReset" class="pomo-btn">Reset</button>
+      </div>
+      <div class="pomodoro-stats">
+        <div class="stat-item">
+          <div class="stat-value" id="pomoToday">0</div>
+          <div class="stat-label">Today</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="pomoTotal">0</div>
+          <div class="stat-label">Total</div>
+        </div>
+      </div>
+      <div class="pomodoro-settings">
+        <label><span>Work (min)</span><input type="number" id="pomoWork" value="25" min="1" max="60"></label>
+        <label><span>Break (min)</span><input type="number" id="pomoBreak" value="5" min="1" max="30"></label>
+      </div>
+    </div>
+  </div>
+
+  <div id="achievementsPanel" class="panel">
+    <div class="panel-header">
+      <h3>🏆 Achievements</h3>
+      <button class="close-btn" data-close="achievementsPanel">×</button>
+    </div>
+    <div class="panel-content">
+      <div id="achievementsList" class="achievements-list"></div>
+    </div>
+  </div>
+
+  <div id="analyticsPanel" class="panel">
+    <div class="panel-header">
+      <h3>📊 Analytics</h3>
+      <button class="close-btn" data-close="analyticsPanel">×</button>
+    </div>
+    <div class="panel-content">
+      <div class="analytics-grid">
+        <div class="analytics-card">
+          <div class="analytics-title">Total Opens</div>
+          <div class="analytics-value" id="totalOpens">0</div>
+        </div>
+        <div class="analytics-card">
+          <div class="analytics-title">Searches</div>
+          <div class="analytics-value" id="totalSearches">0</div>
+        </div>
+        <div class="analytics-card">
+          <div class="analytics-title">Focus Time</div>
+          <div class="analytics-value" id="totalFocusTime">0h</div>
+        </div>
+        <div class="analytics-card">
+          <div class="analytics-title">Streak</div>
+          <div class="analytics-value" id="currentStreak">0d</div>
+        </div>
+      </div>
+      <div class="analytics-chart">
+        <canvas id="activityChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div id="notePad" class="notepad">
+    <div class="notepad-header">
+      <span>📝 Notes</span>
+      <button class="notepad-toggle">−</button>
+    </div>
+    <textarea class="notepad-content" placeholder="Quick notes..."></textarea>
+  </div>
+
+  <div id="linkModal" class="modal">
+    <div class="modal-content">
+      <h3>Add Quick Link</h3>
+      <input type="text" id="linkName" placeholder="Name (e.g., GitHub)">
+      <input type="text" id="linkUrl" placeholder="URL (e.g., https://github.com)">
+      <input type="text" id="linkIcon" placeholder="Icon (emoji or URL)">
+      <div class="modal-actions">
+        <button id="saveLinkBtn" class="action-btn">Save</button>
+        <button class="action-btn" data-close-modal="linkModal">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="videoControls" class="video-controls">
+    <button id="videoShuffle" title="Next Video">⏭️</button>
+    <button id="videoMute" title="Mute">🔊</button>
+    <button id="videoFullscreen" title="Fullscreen">⛶</button>
   </div>
 
   <script src="script.js"></script>
