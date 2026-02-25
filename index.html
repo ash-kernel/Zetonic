@@ -18,6 +18,16 @@
   
   <div id="settingsBtn" title="Settings">⚙</div>
 
+  <!-- Weather Widget -->
+  <div id="weatherWidget">
+    <div class="weather-icon">🌤️</div>
+    <div class="weather-info">
+      <div class="weather-temp">--°</div>
+      <div class="weather-desc">Loading...</div>
+      <div class="weather-location">📍 --</div>
+    </div>
+  </div>
+
   
   <div id="settingsPanel">
     <h3>⚙ Zetonic Settings</h3>
@@ -37,6 +47,11 @@
       </label>
 
       <label>
+        <span>Show Weather</span>
+        <input type="checkbox" id="toggleWeather">
+      </label>
+
+      <label>
         <span>Time Format</span>
         <select id="timeFormat">
           <option value="24">24 Hour</option>
@@ -49,6 +64,7 @@
     <div class="settings-section">
       <h4>Custom Videos</h4>
       
+      <!-- URL Input -->
       <div class="add-video-container">
         <input 
           type="text" 
@@ -56,7 +72,20 @@
           placeholder="Paste video URL here..."
           autocomplete="off"
         >
-        <button id="addVideoBtn" title="Add Video">+</button>
+        <button id="addVideoBtn" title="Add Video URL">+</button>
+      </div>
+      
+      <!-- Local File Upload -->
+      <div class="upload-video-container">
+        <label for="uploadVideoInput" class="upload-label">
+          📁 Upload Local Video
+        </label>
+        <input 
+          type="file" 
+          id="uploadVideoInput" 
+          accept="video/mp4,video/webm,video/ogg"
+          style="display: none;"
+        >
       </div>
       
       <div id="videoFeedback" class="feedback"></div>
@@ -65,7 +94,7 @@
         
       </div>
       
-      <p class="video-hint">💡 Supported: .mp4, .webm, .ogg from Pexels, Pixabay, Catbox, etc.</p>
+      <p class="video-hint">💡 Supported: .mp4, .webm, .ogg from URLs or local files</p>
     </div>
   </div>
 

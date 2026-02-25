@@ -1,5 +1,6 @@
-
-
+/* ============================================
+   RESET & BASE
+   ============================================ */
 
 * {
   margin: 0;
@@ -15,7 +16,9 @@ body {
   font-family: 'Sora', sans-serif;
 }
 
-
+/* ============================================
+   BACKGROUND VIDEO
+   ============================================ */
 
 #bg {
   position: fixed;
@@ -28,7 +31,9 @@ body {
   opacity: 0.95;
 }
 
-
+/* ============================================
+   MAIN CONTENT
+   ============================================ */
 
 #mainContent {
   height: 100vh;
@@ -41,6 +46,9 @@ body {
   padding: 20px;
 }
 
+/* ============================================
+   CLOCK & DATE
+   ============================================ */
 
 #time {
   font-size: clamp(48px, 10vw, 72px);
@@ -50,7 +58,6 @@ body {
   transition: opacity 0.3s ease;
 }
 
-
 #date {
   font-size: clamp(14px, 3vw, 18px);
   font-weight: 600;
@@ -59,7 +66,9 @@ body {
   transition: opacity 0.3s ease;
 }
 
-
+/* ============================================
+   SEARCH CONTAINER
+   ============================================ */
 
 #searchContainer {
   display: flex;
@@ -103,7 +112,9 @@ body {
   color: rgba(255, 255, 255, 0.6);
 }
 
-
+/* ============================================
+   QUOTE
+   ============================================ */
 
 #quote {
   font-family: 'Inter', sans-serif;
@@ -118,7 +129,93 @@ body {
   transition: opacity 0.3s ease;
 }
 
+/* ============================================
+   WEATHER WIDGET
+   ============================================ */
 
+#weatherWidget {
+  position: fixed;
+  top: 20px;
+  left: 25px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(16px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  z-index: 900;
+  cursor: pointer;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#weatherWidget:hover {
+  background: rgba(0, 0, 0, 0.45);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.weather-icon {
+  font-size: 32px;
+  line-height: 1;
+  animation: weatherPulse 2s ease-in-out infinite;
+}
+
+@keyframes weatherPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.weather-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.weather-temp {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.weather-desc {
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.85;
+  text-transform: capitalize;
+  letter-spacing: 0.3px;
+}
+
+.weather-location {
+  font-size: 10px;
+  opacity: 0.7;
+  font-weight: 500;
+  margin-top: 1px;
+}
+
+/* ============================================
+   SETTINGS BUTTON
+   ============================================ */
 
 #settingsBtn {
   position: fixed;
@@ -146,13 +243,15 @@ body {
   transform: rotate(90deg) scale(0.95);
 }
 
-
+/* ============================================
+   SETTINGS PANEL
+   ============================================ */
 
 #settingsPanel {
   position: fixed;
   top: 70px;
   right: 25px;
-  width: min(90vw, 320px);
+  width: min(90vw, 340px);
   max-height: 80vh;
   padding: 20px;
   background: rgba(10, 10, 10, 0.95);
@@ -181,7 +280,7 @@ body {
   }
 }
 
-
+/* Scrollbar */
 #settingsPanel::-webkit-scrollbar {
   width: 6px;
 }
@@ -263,6 +362,9 @@ body {
   border-color: rgba(255, 255, 255, 0.4);
 }
 
+/* ============================================
+   TOGGLE SWITCHES
+   ============================================ */
 
 input[type="checkbox"] {
   appearance: none;
@@ -298,7 +400,9 @@ input[type="checkbox"]:checked::before {
   left: 21px;
 }
 
-
+/* ============================================
+   VIDEO MANAGEMENT
+   ============================================ */
 
 .add-video-container {
   display: flex;
@@ -353,6 +457,41 @@ input[type="checkbox"]:checked::before {
   transform: scale(0.95);
 }
 
+/* Local Upload */
+.upload-video-container {
+  margin-bottom: 8px;
+}
+
+.upload-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(139, 92, 246, 0.2);
+  border: 2px dashed rgba(139, 92, 246, 0.5);
+  border-radius: 8px;
+  padding: 12px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.upload-label:hover {
+  background: rgba(139, 92, 246, 0.3);
+  border-color: rgba(139, 92, 246, 0.7);
+  transform: translateY(-2px);
+}
+
+.upload-label:active {
+  transform: translateY(0);
+}
+
+/* ============================================
+   FEEDBACK MESSAGES
+   ============================================ */
 
 .feedback {
   display: none;
@@ -361,11 +500,6 @@ input[type="checkbox"]:checked::before {
   font-size: 13px;
   margin-bottom: 8px;
   animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
 }
 
 .feedback.success {
@@ -380,9 +514,12 @@ input[type="checkbox"]:checked::before {
   color: #FF6B6B;
 }
 
+/* ============================================
+   VIDEO LIST
+   ============================================ */
 
 .videos-list {
-  max-height: 200px;
+  max-height: 250px;
   overflow-y: auto;
   margin-bottom: 8px;
 }
@@ -399,6 +536,21 @@ input[type="checkbox"]:checked::before {
 .videos-list::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 2px;
+}
+
+.video-category {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.6;
+  margin: 12px 0 8px 0;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.video-category:first-child {
+  margin-top: 0;
 }
 
 .video-item {
@@ -469,7 +621,9 @@ input[type="checkbox"]:checked::before {
   margin-top: 4px;
 }
 
-
+/* ============================================
+   RESPONSIVE
+   ============================================ */
 
 @media (max-width: 768px) {
   #settingsPanel {
@@ -481,6 +635,28 @@ input[type="checkbox"]:checked::before {
 
   #settingsBtn {
     right: 15px;
+  }
+
+  #weatherWidget {
+    left: 15px;
+    padding: 10px 14px;
+    gap: 10px;
+  }
+
+  .weather-icon {
+    font-size: 28px;
+  }
+
+  .weather-temp {
+    font-size: 18px;
+  }
+
+  .weather-desc {
+    font-size: 11px;
+  }
+
+  .weather-location {
+    font-size: 9px;
   }
 
   #time {
@@ -513,9 +689,34 @@ input[type="checkbox"]:checked::before {
   #quote {
     font-size: 14px;
   }
+
+  #weatherWidget {
+    top: 15px;
+    left: 10px;
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .weather-icon {
+    font-size: 24px;
+  }
+
+  .weather-temp {
+    font-size: 16px;
+  }
+
+  .weather-desc {
+    font-size: 10px;
+  }
+
+  .weather-location {
+    display: none;
+  }
 }
 
-
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
 
 @media (prefers-reduced-motion: reduce) {
   * {
@@ -524,7 +725,6 @@ input[type="checkbox"]:checked::before {
     transition-duration: 0.01ms !important;
   }
 }
-
 
 *:focus-visible {
   outline: 2px solid rgba(66, 153, 225, 0.8);
