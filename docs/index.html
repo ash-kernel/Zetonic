@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Zetonic • Minimal Anime New Tab</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zetonic • Modern Anime New Tab</title>
+
+<meta name="description" content="Zetonic is a clean, minimalist anime-style Chrome new tab extension.">
+<meta property="og:title" content="Zetonic">
+<meta property="og:description" content="Minimal. Clean. Distraction-Free.">
+<meta property="og:image" content="https://cdn.discordapp.com/attachments/1470985393708208323/1471048403046895649/readmebanner.png">
+
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <nav>
-  <div class="logo">Zetonic</div>
+  <div class="logo">
+    <img src="https://cdn.discordapp.com/attachments/1470985393708208323/1471048403046895649/readmebanner.png" alt="Zetonic Logo">
+  </div>
   <div class="links">
     <a href="features.html">Features</a>
     <a href="#install">Install</a>
@@ -18,14 +27,23 @@
   </div>
 </nav>
 
-<header>
+<header class="hero">
   <h1>Minimal. Clean. Distraction-Free.</h1>
   <p>A modern anime-style Chrome new tab experience.</p>
-  <div class="buttons">
-    <a href="https://github.com/ash-kernel/Zetonic/archive/refs/heads/main.zip" class="primary">Download ZIP</a>
+
+  <div class="cta">
+    <a href="https://github.com/ash-kernel/Zetonic/archive/refs/heads/main.zip" class="btn-primary">
+      Download ZIP
+    </a>
     <button onclick="copyCommand()">Copy PowerShell Install</button>
   </div>
 </header>
+
+<section class="preview">
+  <h2>Preview</h2>
+  <img src="https://cdn.discordapp.com/attachments/1470985393708208323/1475817337499287644/Screenshot_2026-02-24_170054.png" alt="Zetonic Preview">
+  <img src="https://cdn.discordapp.com/attachments/1470985393708208323/1475817819579875328/image.png" alt="Settings Preview">
+</section>
 
 <section id="install">
   <h2>Installation Guide</h2>
@@ -33,22 +51,16 @@
     <li>Download the ZIP file.</li>
     <li>Extract it anywhere on your PC.</li>
     <li>Open Chrome → Extensions → Enable Developer Mode.</li>
-    <li>Click "Load Unpacked" and select the extracted folder.</li>
-    <li>Done. Open a new tab.</li>
+    <li>Click "Load Unpacked".</li>
+    <li>Select the extracted folder.</li>
+    <li>Open a new tab. You're done.</li>
   </ol>
 </section>
 
 <footer>
-  © 2026 Zetonic • Developed by Ash
+  <p>© 2026 Zetonic • Developed by Ash</p>
 </footer>
 
-<script>
-function copyCommand() {
-  const cmd = "git clone https://github.com/ash-kernel/Zetonic.git";
-  navigator.clipboard.writeText(cmd);
-  alert("PowerShell command copied!");
-}
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
