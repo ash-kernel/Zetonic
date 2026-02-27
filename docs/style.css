@@ -264,11 +264,9 @@ body {
 
 .preview-grid {
   display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 24px;
-  align-items: start;
+  place-items: center;
+  min-height: 100vh;
 }
-
 .preview-card {
   border-radius: var(--radius);
   overflow: hidden;
