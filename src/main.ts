@@ -112,7 +112,6 @@ function updateDailyFocus(): void {
   }
 }
 
-// Background init
 (async () => {
   const { bgMode, imageSource, imageRotation } = getSettings();
   applyBgMode();
@@ -157,17 +156,12 @@ function updateDailyFocus(): void {
 
 nextBgBtn?.addEventListener("click", playNextBg);
 
-// Clock
 updateTime(timeEl, dateEl, greetingEl);
 setInterval(() => updateTime(timeEl, dateEl, greetingEl), 1000);
 
-// Search
 initSearch(searchInput, searchLogo);
-
-// Quote
 loadQuote(quoteEl).catch(console.error);
 
-// Weather
 const weatherEls = {
   widget: weatherWidget,
   icon: weatherIcon as HTMLElement | null,
@@ -178,12 +172,10 @@ const weatherEls = {
 loadWeather(weatherEls).catch(console.error);
 setInterval(() => loadWeather(weatherEls).catch(console.error), 30 * 60 * 1000);
 
-// Quick links
 renderQuickLinks();
 updateDailyFocus();
 applyFocusMode();
 
-// Keyboard
 onShortcut("n", playNextBg);
 onShortcut("s", () => {
   const open = settingsPanel?.getAttribute("data-open") === "true";
@@ -192,7 +184,6 @@ onShortcut("s", () => {
 });
 initKeyboard();
 
-// Settings panel
 initSettingsPanel(
   {
     settingsBtn: document.getElementById("settingsBtn"),

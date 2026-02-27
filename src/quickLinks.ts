@@ -37,7 +37,5 @@ export function saveQuickLinks(links: QuickLink[]): void {
         url: String(l.url || "").slice(0, 500),
       })))
     );
-  } catch {
-    /* ignore */
-  }
+  } catch {}
 }

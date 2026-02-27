@@ -4,63 +4,108 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Features • Zetonic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+<div class="noise"></div>
 
-<nav>
-  <div class="logo">
-    <a href="index.html">Zetonic</a>
-  </div>
-  <div class="links">
+<nav class="nav">
+  <a href="index.html" class="nav-logo">Zetonic</a>
+  <div class="nav-links">
     <a href="features.html">Features</a>
     <a href="index.html#install">Install</a>
+    <a href="index.html#faq">FAQ</a>
     <a href="privacy.html">Privacy</a>
     <a href="license.html">License</a>
   </div>
+  <a href="https://github.com/ash-kernel/Zetonic" class="nav-gh" target="_blank" rel="noopener">GitHub</a>
 </nav>
 
-<section>
+<section class="section page-hero">
   <h1>Features</h1>
-
-  <div class="feature-list">
-    <div class="feature-card">
-      <h3>🎥 Animated Anime Backgrounds</h3>
-      <p>Dynamic, aesthetic backgrounds streamed directly into your new tab.</p>
-    </div>
-
-    <div class="feature-card">
-      <h3>🕒 Real-Time Clock & Date</h3>
-      <p>Stay aware of time with a clean, minimal display.</p>
-    </div>
-
-    <div class="feature-card">
-      <h3>🔍 Integrated Google Search</h3>
-      <p>Search instantly without distractions.</p>
-    </div>
-
-    <div class="feature-card">
-      <h3>💡 Inspirational Quotes</h3>
-      <p>Motivational quotes displayed dynamically.</p>
-    </div>
-
-    <div class="feature-card">
-      <h3>⚡ Lightweight & Fast</h3>
-      <p>Optimized performance without slowing your browser.</p>
-    </div>
-
-    <div class="feature-card">
-      <h3>🎨 Clean Minimal UI</h3>
-      <p>No clutter. No distractions. Just aesthetic focus.</p>
-    </div>
-  </div>
-
+  <p class="page-desc">Everything Zetonic has to offer</p>
 </section>
 
-<footer>
-  © 2026 Zetonic • Developed by Ash
+<section class="section">
+  <div class="feature-list-full">
+    <div class="feature-card-full" data-animate>
+      <span class="fcf-icon">🎥</span>
+      <h3>Video & Image Backgrounds</h3>
+      <p>Curated anime videos, Picsum random images, or your own custom URL. Switch modes anytime.</p>
+    </div>
+    <div class="feature-card-full" data-animate>
+      <span class="fcf-icon">🖼</span>
+      <h3>Image Slideshow</h3>
+      <p>Set rotation interval. Curated, random, or custom image sources.</p>
+    </div>
+    <div class="feature-card-full" data-animate>
+      <span class="fcf-icon">🕒</span>
+      <h3>Real-Time Clock</h3>
+      <p>24h or 12h format. Clean typography with optional greeting.</p>
+    </div>
+    <div class="feature-card-full" data-animate>
+      <span class="fcf-icon">👋</span>
+      <h3>Personalized Greeting</h3>
+      <p>"Good morning, Ash" — add your name in settings.</p>
+    </div>
+    <div class="feature-card-full" data-animate>
+      <span class="fcf-icon">🎯</span>
+      <h3>Daily Focus</h3>
+      <p>One-word intention above the clock. Stay mindful.</p>
+    </div>
+    <div class="feature-card-full" data-animate>
+      <span class="fcf-icon">🔗</span>
+      <h3>Quick Links</h3>
+      <p>6 customizable bookmarks. Edit in settings.</p>
+    </div>
+    <div class="feature-card-full" data-animate>
+      <span class="fcf-icon">🔍</span>
+      <h3>Search</h3>
+      <p>Google or DuckDuckGo. Press <kbd>/</kbd> to focus.</p>
+    </div>
+    <div class="feature-card-full" data-animate>
+      <span class="fcf-icon">⌨</span>
+      <h3>Keyboard Shortcuts</h3>
+      <p><kbd>/</kbd> search · <kbd>N</kbd> next · <kbd>S</kbd> settings</p>
+    </div>
+    <div class="feature-card-full" data-animate>
+      <span class="fcf-icon">💡</span>
+      <h3>Quotes</h3>
+      <p>Advice Slip API with local fallbacks. Toggle on/off.</p>
+    </div>
+    <div class="feature-card-full" data-animate>
+      <span class="fcf-icon">🌤</span>
+      <h3>Weather</h3>
+      <p>Location-based via Open-Meteo. 30min cache.</p>
+    </div>
+    <div class="feature-card-full" data-animate>
+      <span class="fcf-icon">🎨</span>
+      <h3>Themes</h3>
+      <p>Default, Amber, Cyan, Rose, Violet.</p>
+    </div>
+    <div class="feature-card-full" data-animate>
+      <span class="fcf-icon">🧘</span>
+      <h3>Focus & Zen</h3>
+      <p>Focus: clock + search. Zen: ultra-minimal.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>© 2026 Zetonic • <a href="https://github.com/ash-kernel">Ash</a></p>
 </footer>
 
+<script>
+document.querySelectorAll("[data-animate]").forEach((el, i) => {
+  el.style.transitionDelay = (i * 0.05) + "s";
+});
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e) => e.isIntersecting && e.target.classList.add("visible"));
+}, { threshold: 0.1 });
+document.querySelectorAll("[data-animate]").forEach((el) => obs.observe(el));
+</script>
 </body>
 </html>

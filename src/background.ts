@@ -19,9 +19,7 @@ export async function loadWallpapers(): Promise<string[]> {
       const data = await r.json();
       if (Array.isArray(data) && data.length > 0) wallpapers = data;
     }
-  } catch {
-    /* use fallback */
-  }
+  } catch {}
   return wallpapers;
 }
 

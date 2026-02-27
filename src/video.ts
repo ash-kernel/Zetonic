@@ -30,8 +30,6 @@ export function getVideoUrl(videoData: VideoSource): string {
   return (videoData as LocalVideoData).url;
 }
 
-// ---------- Remote & User Videos ----------
-
 export async function loadVideos(videoEl: HTMLVideoElement): Promise<void> {
   const localOnly = (() => {
     try {
@@ -95,8 +93,6 @@ export async function playVideo(
     console.error("Video playback error:", error);
   }
 }
-
-// ---------- User URL Videos (localStorage) ----------
 
 export function getUserVideos(): string[] {
   try {
@@ -171,8 +167,6 @@ export function isValidVideoUrl(url: string): boolean {
     return false;
   }
 }
-
-// ---------- Local File Videos (IndexedDB) ----------
 
 function openDB(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {

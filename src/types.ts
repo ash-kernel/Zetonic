@@ -1,5 +1,3 @@
-// Shared types for Zetonic
-
 export interface Settings {
   showClock: boolean;
   showQuote: boolean;

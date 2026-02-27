@@ -2,7 +2,7 @@ import type { WeatherData, WeatherCache } from "./types";
 import { getSettings } from "./settings";
 
 const CACHE_KEY = "zetonicWeatherCache";
-const CACHE_DURATION = 30 * 60 * 1000; // 30 minutes
+const CACHE_DURATION = 30 * 60 * 1000;
 
 const WEATHER_ICONS: Record<string, string> = {
   Clear: "☀️",
@@ -96,9 +96,7 @@ export async function loadWeather(
         return;
       }
     }
-  } catch {
-    /* ignore cache errors */
-  }
+  } catch {}
 
   if (!navigator.geolocation) {
     showWeatherError({ icon, temp, desc, location });

@@ -3,83 +3,123 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zetonic • Modern Anime New Tab</title>
-
-<meta name="description" content="Zetonic is a clean, minimalist anime-style Chrome new tab extension.">
-<meta property="og:title" content="Zetonic">
-<meta property="og:description" content="Minimal. Clean. Distraction-Free.">
-<meta property="og:image" content="https://i.ibb.co/xSfFsqvX/icon.png">
-
+<title>Zetonic — Minimal Anime New Tab</title>
+<meta name="description" content="Transform your browser's new tab into a serene, anime-inspired experience. Minimal. Clean. Distraction-free.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+<div class="noise"></div>
 
-<nav>
-  <div class="logo">
-    <img src="https://i.ibb.co/xSfFsqvX/icon.png" alt="Zetonic Logo">
-  </div>
-  <div class="links">
+<nav class="nav">
+  <a href="index.html" class="nav-logo">Zetonic</a>
+  <div class="nav-links">
     <a href="features.html">Features</a>
     <a href="#install">Install</a>
+    <a href="#faq">FAQ</a>
     <a href="privacy.html">Privacy</a>
     <a href="license.html">License</a>
   </div>
+  <a href="https://github.com/ash-kernel/Zetonic" class="nav-gh" target="_blank" rel="noopener">GitHub</a>
 </nav>
 
 <header class="hero">
-  <h1>Minimal. Clean. Distraction-Free.</h1>
-  <p>A modern anime-style Chrome new tab experience.</p>
-
-  <div class="cta">
-    <a href="https://github.com/ash-kernel/Zetonic/archive/refs/heads/main.zip" class="btn-primary">
-      Download ZIP
-    </a>
-    <button onclick="copyCommand()">Copy PowerShell Install</button>
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-tag animate-fade">Transform your new tab</p>
+    <h1 class="hero-title animate-slide">Minimal.<br>Clean.<br>Distraction-free.</h1>
+    <p class="hero-desc animate-fade">A serene, anime-inspired Chrome extension. Video backgrounds, quotes, weather, and productivity tools.</p>
+    <div class="hero-cta animate-fade">
+      <a href="https://github.com/ash-kernel/Zetonic/archive/refs/heads/main.zip" class="btn btn-primary">Download ZIP</a>
+      <button class="btn btn-secondary" id="copyPsBtn">Copy Install Command</button>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
   </div>
 </header>
 
-<section class="preview">
-  <h2>Preview</h2>
-
-  <div class="preview-images">
-    <img src="https://i.ibb.co/1YVnmwp9/Screenshot-2026-02-24-170054.png" alt="Main Preview">
-    <img src="https://i.ibb.co/LhpRxMFZ/Screenshot-2026-02-24-170258.png" alt="Settings Preview" class="settings-preview">
+<section class="section preview" id="preview">
+  <h2 class="section-title" data-animate>Preview</h2>
+  <div class="preview-grid" data-animate>
+    <div class="preview-card">
+      <img src="https://cdn.discordapp.com/attachments/1470985393708208323/1476913276825767936/Screenshot_2026-02-27_173400.png" alt="Zetonic New Tab">
+    </div>
+    <div class="preview-card preview-card-sm">
+      <img src="https://media.discordapp.net/attachments/1470985393708208323/1476913277496983685/Screenshot_2026-02-27_173422.png" alt="Zetonic Settings">
+    </div>
   </div>
 </section>
 
-<section id="install">
-  <h2>Installation Guide</h2>
-
-  <h3>Method 1 — Manual</h3>
-  <ol>
-    <li>Download the ZIP file.</li>
-    <li>Extract it anywhere on your PC.</li>
-    <li>Open Chrome → Extensions.</li>
-    <li>Enable Developer Mode.</li>
-    <li>Click "Load Unpacked".</li>
-    <li>Select the extracted folder.</li>
-  </ol>
-
-  <h3 style="margin-top:40px;">PowerShell Command</h3>
-
-  <div class="code-box">
-    <code id="psCommand">
-irm https://raw.githubusercontent.com/ash-kernel/Zetonic/main/install-auto.ps1 | iex
-    </code>
+<section class="section features-preview" id="features">
+  <h2 class="section-title" data-animate>Why Zetonic</h2>
+  <div class="feature-grid" data-animate>
+    <div class="feature-item"><span class="fi-icon">🎥</span><span>Video & image backgrounds</span></div>
+    <div class="feature-item"><span class="fi-icon">🕒</span><span>Real-time clock</span></div>
+    <div class="feature-item"><span class="fi-icon">🔍</span><span>Search (Google / DuckDuckGo)</span></div>
+    <div class="feature-item"><span class="fi-icon">💡</span><span>Inspirational quotes</span></div>
+    <div class="feature-item"><span class="fi-icon">🌤</span><span>Weather widget</span></div>
+    <div class="feature-item"><span class="fi-icon">🔗</span><span>Quick links</span></div>
+    <div class="feature-item"><span class="fi-icon">⌨</span><span>Keyboard shortcuts</span></div>
+    <div class="feature-item"><span class="fi-icon">⚡</span><span>~7KB gzipped</span></div>
   </div>
-
-  <button onclick="copyPS()">Copy PowerShell Command</button>
-
-  <p style="margin-top:15px; color:#ccc;">
-    After cloning the repository, open Chrome → Extensions → Load Unpacked → Select the Zetonic folder.
-  </p>
 </section>
 
-<footer>
-  <p>© 2026 Zetonic • Developed by Ash</p>
+<section class="section install" id="install">
+  <h2 class="section-title" data-animate>Install</h2>
+  
+  <div class="install-method" data-animate>
+    <h3>One-liner (PowerShell)</h3>
+    <div class="code-block">
+      <code id="psCommand">irm https://raw.githubusercontent.com/ash-kernel/Zetonic/main/install-auto.ps1 | iex</code>
+      <button class="code-copy" id="copyCode">Copy</button>
+    </div>
+    <p>Downloads to <code>Documents\extensions\Zetonic</code></p>
+  </div>
+
+  <div class="install-method" data-animate>
+    <h3>Manual</h3>
+    <ol class="install-steps">
+      <li><span>1</span>Download ZIP or <code>git clone</code></li>
+      <li><span>2</span>Run <code>npm install && npm run build</code></li>
+      <li><span>3</span>Open <code>chrome://extensions</code></li>
+      <li><span>4</span>Enable Developer Mode → Load unpacked</li>
+      <li><span>5</span>Select the Zetonic folder</li>
+    </ol>
+  </div>
+</section>
+
+<section class="section faq" id="faq">
+  <h2 class="section-title" data-animate>FAQ</h2>
+  <div class="faq-list" data-animate>
+    <details class="faq-item">
+      <summary>Why isn't my custom video playing?</summary>
+      <p>Ensure the URL is a direct link (.mp4, .webm), publicly accessible, and the host allows hotlinking.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Can I use local video files?</summary>
+      <p>Yes — upload via Settings, or add to <code>sup/videos.json</code> and reload the extension.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Does this work on Firefox?</summary>
+      <p>Chromium-based only. Firefox support may come later.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Is my data private?</summary>
+      <p>Yes. Settings and videos stored locally. No tracking. Only API calls: quotes, weather, search.</p>
+    </details>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>© 2026 Zetonic • Made with ❤️ by <a href="https://github.com/ash-kernel">Ash</a></p>
+  <p class="footer-sub">MIT License • Pexels • Advice Slip • Open-Meteo</p>
 </footer>
 
+<div class="toast" id="toast">Copied!</div>
 <script src="script.js"></script>
 </body>
 </html>
