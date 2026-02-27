@@ -15,7 +15,7 @@
 
 <div align="centre">
 
-![Demo](https://cdn.discordapp.com/attachments/1470985393708208323/1475817337499287644/Screenshot_2026-02-24_170054.png?ex=699edd80&is=699d8c00&hm=c4d39a76ecc0f9cd969ca97c99d0abf3a857293454b4dc6bbeb24435e46ffc88&)
+![Demo](https://cdn.discordapp.com/attachments/1470985393708208323/1476913276825767936/Screenshot_2026-02-27_173400.png?ex=69a2da2c&is=69a188ac&hm=d79245ceb922cd371d29aeefbbeddb053e342fcc3b31c6c6d005e76a328c35a1&)
 
 This is what you get!
 </div>
@@ -228,6 +228,13 @@ Zetonic/
 | **Custom Videos** | Add/remove personal video URLs | Empty |
 
 ![settings](https://cdn.discordapp.com/attachments/1470985393708208323/1475817819579875328/image.png?ex=699eddf3&is=699d8c73&hm=80abcac7ddbb1220a8637af2a03c9d5ada8039f9deb379658f73113d35226377&)
+
+![settings2](https://media.discordapp.net/attachments/1470985393708208323/1476913277496983685/Screenshot_2026-02-27_173422.png?ex=69a2da2d&is=69a188ad&hm=352c355e021f496e5f2f8240cf01312d9c96eeb522d785e86e9ec4867e792c4c&=&format=webp&quality=lossless)
+
+![settings3](https://media.discordapp.net/attachments/1470985393708208323/1476913277966614650/Screenshot_2026-02-27_173429.png?ex=69a2da2d&is=69a188ad&hm=d012be00ebeef1be329c03679f9d549f6cb8648c38a04b17d00cb9216356e4a6&=&format=webp&quality=lossless)
+
+![settings4](https://media.discordapp.net/attachments/1470985393708208323/1476913278327455804/Screenshot_2026-02-27_173446.png?ex=69a2da2d&is=69a188ad&hm=57030bd768f811c553b6f126f34ddee69ba347e4da16cc67b3433cdd96086a3c&=&format=webp&quality=lossless)
+
 
 All settings are saved automatically in localStorage.
 
