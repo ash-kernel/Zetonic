@@ -115,7 +115,7 @@ cd Zetonic
 Make sure the extracted/cloned folder contains these files:
 - `manifest.json`
 - `index.html`
-- `script.js`
+- `dist/script.js`
 - `style.css`
 - `icon.png`
 - `sup/` folder with `videos.json`
@@ -188,10 +188,10 @@ Edit `sup/videos.json` to add default videos:
 
 
 
-Edit the `fallbackQuotes` array in `script.js`:
+Edit the `FALLBACK_QUOTES` array in `src/quotes.ts`:
 
-```javascript
-const fallbackQuotes = [
+```typescript
+const FALLBACK_QUOTES = [
   "The journey of a thousand miles begins with one step.",
   "Your custom quote here.",
   "Another inspiring message."
@@ -204,11 +204,13 @@ These quotes are used when the API is unavailable.
 ```
 Zetonic/
 ├── index.html          
-├── script.js           
+├── dist/
+│   └── script.js       
 ├── style.css           
 ├── manifest.json       
 ├── icon.png            
 ├── install-auto.ps1    
+├── src/                (TypeScript source)
 └── sup/
     ├── videos.json     
     └── g-logo.png      
@@ -304,10 +306,10 @@ Yes! All settings and custom videos are stored locally in your browser's localSt
 
 
 1. Clone the repository
-2. Make your changes to the code
-3. Load the extension in Chrome developer mode
-4. Test your changes
-5. Reload the extension to see updates
+2. Run `npm install` and `npm run build`
+3. Make your changes to the code in `src/`
+4. Load the extension in Chrome developer mode
+5. Run `npm run build` after edits, then reload the extension
 
 
 

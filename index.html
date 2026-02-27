@@ -3,119 +3,132 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zetonic - New Tab</title>
-
-  
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400&display=swap" rel="stylesheet">
-
+  <title>Zetonic</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <video id="bgVideo" class="bg-layer" autoplay muted loop playsinline></video>
+  <div id="bgImage" class="bg-layer bg-image"></div>
 
-  
-  <video id="bg" autoplay muted loop playsinline></video>
+  <button id="nextBgBtn" title="Next (N)" aria-label="Next">▶</button>
+  <div id="settingsBtn" title="Settings (S)" aria-label="Settings">⚙</div>
 
-  
-  <div id="settingsBtn" title="Settings">⚙</div>
-
-  <!-- Weather Widget -->
   <div id="weatherWidget">
-    <div class="weather-icon">🌤️</div>
+    <span class="weather-icon">🌤</span>
     <div class="weather-info">
-      <div class="weather-temp">--°</div>
-      <div class="weather-desc">Loading...</div>
-      <div class="weather-location">📍 --</div>
+      <span class="weather-temp">--°</span>
+      <span class="weather-desc">—</span>
+      <span class="weather-location">—</span>
     </div>
   </div>
 
-  
-  <div id="settingsPanel">
-    <h3>⚙ Zetonic Settings</h3>
+  <aside id="settingsPanel">
+    <header class="panel-header">
+      <h2>Zetonic</h2>
+      <button id="closeSettings" aria-label="Close">×</button>
+    </header>
 
-    
-    <div class="settings-section">
-      <h4>Display</h4>
-      
-      <label>
-        <span>Show Clock</span>
-        <input type="checkbox" id="toggleClock">
-      </label>
-
-      <label>
-        <span>Show Quote</span>
-        <input type="checkbox" id="toggleQuote">
-      </label>
-
-      <label>
-        <span>Show Weather</span>
-        <input type="checkbox" id="toggleWeather">
-      </label>
-
-      <label>
-        <span>Time Format</span>
-        <select id="timeFormat">
-          <option value="24">24 Hour</option>
-          <option value="12">12 Hour</option>
-        </select>
-      </label>
-    </div>
-
-    
-    <div class="settings-section">
-      <h4>Custom Videos</h4>
-      
-      <!-- URL Input -->
-      <div class="add-video-container">
-        <input 
-          type="text" 
-          id="addVideoInput" 
-          placeholder="Paste video URL here..."
-          autocomplete="off"
-        >
-        <button id="addVideoBtn" title="Add Video URL">+</button>
+    <section class="settings-section" data-section="personal">
+      <button class="section-toggle" aria-expanded="true"><span>Personal</span><span class="chevron">▾</span></button>
+      <div class="section-content">
+        <label><span>Your name</span><input type="text" id="userName" placeholder="For greeting"></label>
+        <label><span>Daily focus</span><input type="text" id="dailyFocus" placeholder="One word"></label>
       </div>
-      
-      <!-- Local File Upload -->
-      <div class="upload-video-container">
-        <label for="uploadVideoInput" class="upload-label">
-          📁 Upload Local Video
+    </section>
+
+    <section class="settings-section" data-section="display">
+      <button class="section-toggle" aria-expanded="true"><span>Display</span><span class="chevron">▾</span></button>
+      <div class="section-content">
+        <label><span>Clock</span><input type="checkbox" id="toggleClock"></label>
+        <label><span>Quote</span><input type="checkbox" id="toggleQuote"></label>
+        <label><span>Weather</span><input type="checkbox" id="toggleWeather"></label>
+        <label><span>Quick links</span><input type="checkbox" id="toggleQuickLinks"></label>
+        <label><span>Focus mode</span><input type="checkbox" id="toggleFocus"></label>
+        <label><span>Zen mode</span><input type="checkbox" id="toggleZen"></label>
+        <label><span>Time format</span>
+          <select id="timeFormat">
+            <option value="24">24h</option>
+            <option value="12">12h</option>
+          </select>
         </label>
-        <input 
-          type="file" 
-          id="uploadVideoInput" 
-          accept="video/mp4,video/webm,video/ogg"
-          style="display: none;"
-        >
+        <label><span>Theme</span>
+          <select id="theme">
+            <option value="default">Default</option>
+            <option value="amber">Amber</option>
+            <option value="cyan">Cyan</option>
+            <option value="rose">Rose</option>
+            <option value="violet">Violet</option>
+          </select>
+        </label>
       </div>
-      
-      <div id="videoFeedback" class="feedback"></div>
-      
-      <div id="userVideosList" class="videos-list">
-        
+    </section>
+
+    <section class="settings-section" data-section="background">
+      <button class="section-toggle" aria-expanded="true"><span>Background</span><span class="chevron">▾</span></button>
+      <div class="section-content">
+        <label><span>Mode</span>
+          <select id="bgMode">
+            <option value="video">Video</option>
+            <option value="image">Image</option>
+          </select>
+        </label>
+        <label id="imageSourceLabel"><span>Image source</span>
+          <select id="imageSource">
+            <option value="curated">Curated</option>
+            <option value="picsum">Random</option>
+            <option value="custom">Custom URL</option>
+          </select>
+        </label>
+        <label id="customUrlLabel" class="full-width"><span>Image URL</span><input type="text" id="customBgUrl" placeholder="https://..."></label>
+        <label><span>Rotate (min)</span><input type="number" id="imageRotation" min="0" max="60" placeholder="0=off"></label>
+        <label><span>Blur</span><input type="range" id="blurLevel" min="0" max="20" value="0"></label>
+
+        <div class="add-video-row">
+          <input type="text" id="addVideoInput" placeholder="Video URL..." autocomplete="off">
+          <button id="addVideoBtn" title="Add">+</button>
+        </div>
+        <label class="upload-btn" for="uploadVideoInput">Upload video</label>
+        <input type="file" id="uploadVideoInput" accept="video/mp4,video/webm,video/ogg" hidden>
+        <label><span>Local only</span><input type="checkbox" id="toggleLocalOnly"></label>
+        <div id="userVideosList" class="videos-list"></div>
+        <p class="hint">.mp4 .webm .ogg · max 100MB</p>
       </div>
-      
-      <p class="video-hint">💡 Supported: .mp4, .webm, .ogg from URLs or local files</p>
-    </div>
-  </div>
+    </section>
 
-  
-  <div id="mainContent">
-    <div id="time">00:00:00</div>
-    <div id="date">Loading date...</div>
+    <section class="settings-section" data-section="search">
+      <button class="section-toggle" aria-expanded="true"><span>Search</span><span class="chevron">▾</span></button>
+      <div class="section-content">
+        <label><span>Engine</span>
+          <select id="searchEngine">
+            <option value="google">Google</option>
+            <option value="duckduckgo">DuckDuckGo</option>
+          </select>
+        </label>
+      </div>
+    </section>
 
+    <section class="settings-section" data-section="links">
+      <button class="section-toggle" aria-expanded="true"><span>Quick links</span><span class="chevron">▾</span></button>
+      <div class="section-content" id="quickLinksEditor"></div>
+    </section>
+
+    <p class="shortcuts-hint">/ search · N next · S settings</p>
+  </aside>
+
+  <main id="mainContent">
+    <p id="greeting" class="greeting"></p>
+    <p id="dailyFocusDisplay" class="daily-focus"></p>
+    <div id="time">00:00</div>
+    <div id="date">—</div>
     <div id="searchContainer">
-      <img id="googleLogo" src="sup/g-logo.png" alt="Google" onerror="this.style.display='none'">
-      <input 
-        type="text" 
-        placeholder="Search Google..." 
-        autocomplete="off"
-        spellcheck="false"
-      >
+      <span id="searchLogo" class="search-logo">◇</span>
+      <input type="text" placeholder="Search…" autocomplete="off" spellcheck="false" id="searchInput">
     </div>
+    <div id="quickLinks" class="quick-links"></div>
+    <p id="quote" class="quote"></p>
+  </main>
 
-    <div id="quote">Your motivational quote appears here.</div>
-  </div>
-
-  <script src="script.js"></script>
+  <script src="dist/script.js"></script>
 </body>
 </html>

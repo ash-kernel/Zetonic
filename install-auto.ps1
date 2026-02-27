@@ -11,11 +11,12 @@ $installDir = Join-Path $documents "extensions\Zetonic"
 
 $files = @(
     "index.html",
-    "script.js",
+    "dist/script.js",
     "style.css",
     "manifest.json",
     "icon.png",
     "sup/videos.json",
+    "sup/wallpapers.json",
     "sup/g-logo.png",
     "sup/icon-banner.png"
 )
