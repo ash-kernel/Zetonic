@@ -309,9 +309,6 @@ Yes! All settings and custom videos are stored locally in your browser's localSt
 ---
 
 
-
-
-
 1. Clone the repository
 2. Run `npm install` and `npm run build`
 3. Make your changes to the code in `src/`
@@ -329,9 +326,6 @@ Contributions are welcome! Please:
 5. Open a Pull Request
 
 ---
-
-
-
 
 - ✨ **NEW:** Custom video URL support via UI
 - ✨ **NEW:** Manage custom videos (add/remove)
@@ -351,13 +345,9 @@ Contributions are welcome! Please:
 
 ---
 
-
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the CC BY-NC 4.0- see the [LICENSE](LICENSE) file for details.
 
 ---
-
-
 
 **Ash**
 
