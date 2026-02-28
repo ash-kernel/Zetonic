@@ -227,7 +227,7 @@ Zetonic/
 | **Time Format** | 12-hour or 24-hour clock | 24-hour |
 | **Custom Videos** | Add/remove personal video URLs | Empty |
 
-![settings](https://cdn.discordapp.com/attachments/1470985393708208323/1475817819579875328/image.png?ex=699eddf3&is=699d8c73&hm=80abcac7ddbb1220a8637af2a03c9d5ada8039f9deb379658f73113d35226377&)
+![settings](https://cdn.discordapp.com/attachments/1470985393708208323/1477249843318620313/image.png?ex=69a413a0&is=69a2c220&hm=39a2e1b0e533ae5301345076ed628e1e311cd8ba6ab90ca6dd6db7bf3ac1bb68&)
 
 ![settings2](https://media.discordapp.net/attachments/1470985393708208323/1476913277496983685/Screenshot_2026-02-27_173422.png?ex=69a2da2d&is=69a188ad&hm=352c355e021f496e5f2f8240cf01312d9c96eeb522d785e86e9ec4867e792c4c&=&format=webp&quality=lossless)
 
