@@ -97,31 +97,109 @@ function initCollapsible(panel: HTMLElement): void {
 
 function renderQuickLinksEditor(container: HTMLElement | null, onUpdate: () => void): void {
   if (!container) return;
-  let links = getQuickLinks();
-  while (links.length < 6) links.push({ name: "", url: "" });
-  links = links.slice(0, 6);
-  container.innerHTML = links
-    .map(
-      (l, i) => `
-    <div class="quick-link-edit">
-      <input type="text" data-i="${i}" data-field="name" value="${(l.name || "").replace(/"/g, "&quot;")}" placeholder="Name">
-      <input type="text" data-i="${i}" data-field="url" value="${(l.url || "").replace(/"/g, "&quot;")}" placeholder="URL">
+  
+  const links = getQuickLinks().filter(l => l.name && l.url);
+  const currentIdx = 0;
+  
+  container.innerHTML = `
+    <div class="ql-editor">
+      <div class="ql-dropdown">
+        <div class="ql-selected">${links.length ? links[0]?.name?.replace(/"/g, "&quot;") : "Select link"}</div>
+        <div class="ql-options">
+          ${links.map((l, i) => `<div class="ql-option" data-idx="${i}">${l.name.replace(/"/g, "&quot;")}</div>`).join("")}
+        </div>
+      </div>
+      <div class="ql-inputs">
+        <input type="text" id="qlName" placeholder="Name" value="${links[0]?.name?.replace(/"/g, "&quot;") || ""}">
+        <input type="text" id="qlUrl" placeholder="URL" value="${links[0]?.url?.replace(/"/g, "&quot;") || ""}">
+      </div>
+      <div class="ql-actions">
+        <button type="button" id="qlAdd" class="ql-btn">+ Add</button>
+        <button type="button" id="qlRemove" class="ql-btn ql-remove" ${!links.length ? "disabled" : ""}>× Remove</button>
+      </div>
     </div>
-  `
-    )
-    .join("");
+  `;
 
-  container.querySelectorAll("input").forEach((input) => {
-    input.addEventListener("change", () => {
-      const i = parseInt(input.getAttribute("data-i") ?? "0", 10);
-      const field = input.getAttribute("data-field") as "name" | "url";
-      const arr = getQuickLinks();
-      while (arr.length <= i) arr.push({ name: "", url: "" });
-      arr[i] = arr[i] || { name: "", url: "" };
-      arr[i][field] = (input as HTMLInputElement).value.trim();
-      saveQuickLinks(arr);
+  const dropdown = container.querySelector(".ql-dropdown") as HTMLElement;
+  const selectedEl = container.querySelector(".ql-selected") as HTMLElement;
+  const optionsEl = container.querySelector(".ql-options") as HTMLElement;
+  const nameEl = container.querySelector("#qlName") as HTMLInputElement;
+  const urlEl = container.querySelector("#qlUrl") as HTMLInputElement;
+  const addBtn = container.querySelector("#qlAdd") as HTMLButtonElement;
+  const removeBtn = container.querySelector("#qlRemove") as HTMLButtonElement;
+
+  let activeIdx = 0;
+
+  const updateFields = (idx: number) => {
+    const currentLinks = getQuickLinks().filter(l => l.name && l.url);
+    if (currentLinks[idx]) {
+      activeIdx = idx;
+      selectedEl.textContent = currentLinks[idx].name;
+      nameEl.value = currentLinks[idx].name;
+      urlEl.value = currentLinks[idx].url;
+      optionsEl.querySelectorAll(".ql-option").forEach((opt, i) => {
+        opt.classList.toggle("active", i === idx);
+      });
+    }
+  };
+
+  const saveCurrent = () => {
+    if (isNaN(activeIdx)) return;
+    const currentLinks = getQuickLinks();
+    const validLinks = currentLinks.filter(l => l.name && l.url);
+    if (validLinks[activeIdx]) {
+      validLinks[activeIdx].name = nameEl.value.trim();
+      validLinks[activeIdx].url = urlEl.value.trim();
+      saveQuickLinks(validLinks);
+      selectedEl.textContent = nameEl.value.trim() || "Select link";
       onUpdate();
+    }
+  };
+
+  dropdown?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle("open");
+  });
+
+  document.addEventListener("click", () => {
+    dropdown?.classList.remove("open");
+  });
+
+  optionsEl?.querySelectorAll(".ql-option").forEach((opt) => {
+    opt.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const idx = parseInt((opt as HTMLElement).getAttribute("data-idx") ?? "0", 10);
+      saveCurrent();
+      updateFields(idx);
+      dropdown?.classList.remove("open");
     });
+  });
+
+  nameEl?.addEventListener("change", saveCurrent);
+  urlEl?.addEventListener("change", saveCurrent);
+
+  addBtn?.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const currentLinks = getQuickLinks().filter(l => l.name && l.url);
+    currentLinks.push({ name: "New Link", url: "https://" });
+    saveQuickLinks(currentLinks);
+    renderQuickLinksEditor(container, onUpdate);
+    updateFields(currentLinks.length - 1);
+    (container.querySelector("#qlName") as HTMLInputElement)?.focus();
+    onUpdate();
+  });
+
+  removeBtn?.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isNaN(activeIdx)) return;
+    const currentLinks = getQuickLinks().filter(l => l.name && l.url);
+    if (!currentLinks.length) return;
+    currentLinks.splice(activeIdx, 1);
+    saveQuickLinks(currentLinks);
+    renderQuickLinksEditor(container, onUpdate);
+    onUpdate();
   });
 }
 

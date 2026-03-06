@@ -353,15 +353,53 @@ select:focus { outline: none; border-color: var(--accent-strong); }
 .no-videos { text-align: center; color: var(--text-muted); font-size: 12px; padding: 16px; }
 .hint { font-size: 10px; color: var(--text-muted); margin-top: 6px; opacity: 0.7; }
 
-.quick-link-edit {
-  display: grid; grid-template-columns: 1fr 2fr auto;
-  gap: 8px; align-items: center; font-size: 12px;
+.ql-editor { display: flex; flex-direction: column; gap: 8px; }
+.ql-dropdown {
+  position: relative;
+  cursor: pointer;
 }
-.quick-link-edit input {
+.ql-selected {
   background: rgba(0,0,0,0.5); border: 1px solid var(--accent);
-  border-radius: var(--radius-sm); padding: 6px 8px;
-  color: var(--text); font-size: 12px;
+  border-radius: var(--radius-sm); padding: 8px 12px;
+  color: var(--text); font-size: 13px;
+  display: flex; justify-content: space-between; align-items: center;
 }
+.ql-selected::after {
+  content: "▾"; color: var(--text-muted);
+}
+.ql-dropdown.open .ql-selected::after { content: "▴"; }
+.ql-options {
+  position: absolute; top: 100%; left: 0; right: 0;
+  background: #111; border: 1px solid var(--accent);
+  border-radius: var(--radius-sm); margin-top: 4px;
+  max-height: 150px; overflow-y: auto;
+  display: none; z-index: 10;
+}
+.ql-dropdown.open .ql-options { display: block; }
+.ql-option {
+  padding: 8px 12px; color: var(--text);
+  font-size: 13px; transition: background 0.15s;
+}
+.ql-option:hover { background: rgba(255,255,255,0.1); }
+.ql-option.active { background: rgba(255,255,255,0.15); }
+.ql-inputs { display: flex; gap: 6px; }
+.ql-inputs input {
+  flex: 1; background: rgba(0,0,0,0.5); border: 1px solid var(--accent);
+  border-radius: var(--radius-sm); padding: 8px 10px;
+  color: var(--text); font-size: 12px; font-family: inherit;
+}
+.ql-inputs input:focus { outline: none; border-color: var(--accent-strong); }
+.ql-actions { display: flex; gap: 6px; }
+.ql-btn {
+  flex: 1; padding: 8px 12px; border: 1px solid var(--accent);
+  border-radius: var(--radius-sm); background: var(--surface-hover);
+  color: var(--text); font-size: 12px; font-family: inherit;
+  cursor: pointer; transition: all 0.2s;
+}
+.ql-btn:hover { background: var(--accent); }
+.ql-remove { background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.3); color: #f87171; }
+.ql-remove:hover { background: rgba(239,68,68,0.3); }
+.ql-remove:disabled { opacity: 0.4; cursor: not-allowed; }
 
 .shortcuts-hint {
   padding: 12px 20px; font-size: 11px;
