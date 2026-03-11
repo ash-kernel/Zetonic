@@ -222,6 +222,7 @@ export function initSettingsPanel(
   set(elements.toggleClock as HTMLInputElement, s.showClock);
   set(elements.toggleQuote as HTMLInputElement, s.showQuote);
   set(elements.toggleWeather as HTMLInputElement, s.showWeather);
+  set(elements.toggleSearch as HTMLInputElement, s.showSearch);
   set(elements.toggleQuickLinks as HTMLInputElement, s.showQuickLinks);
   set(elements.toggleFocus as HTMLInputElement, s.focusMode);
   set(elements.toggleZen as HTMLInputElement, s.zenMode);
@@ -274,6 +275,10 @@ export function initSettingsPanel(
   elements.toggleWeather?.addEventListener("change", function (this: HTMLInputElement) {
     saveSettings({ showWeather: this.checked });
     callbacks.onLoadWeather?.();
+  });
+  elements.toggleSearch?.addEventListener("change", function (this: HTMLInputElement) {
+    saveSettings({ showSearch: this.checked });
+    callbacks.onSearchChange?.();
   });
   elements.toggleQuickLinks?.addEventListener("change", function (this: HTMLInputElement) {
     saveSettings({ showQuickLinks: this.checked });

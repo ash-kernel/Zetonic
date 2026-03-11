@@ -37,6 +37,7 @@ const weatherDesc = document.querySelector(".weather-desc");
 const weatherLocation = document.querySelector(".weather-location");
 const nextBgBtn = document.getElementById("nextBgBtn");
 const quickLinksEl = document.getElementById("quickLinks");
+const searchContainer = document.getElementById("searchContainer");
 const settingsPanel = document.getElementById("settingsPanel");
 
 loadSettings();
@@ -76,6 +77,13 @@ function applyFocusMode(): void {
   if (quickLinksEl) quickLinksEl.style.display = show && showQuickLinks ? "flex" : "none";
   if (dailyFocusEl) dailyFocusEl.style.display = show ? "block" : "none";
   document.body.classList.toggle("zen-mode", zenMode);
+}
+
+function applySearchVisibility(): void {
+  const { showSearch } = getSettings();
+  if (searchContainer) {
+    searchContainer.style.display = showSearch ? "flex" : "none";
+  }
 }
 
 function playNextBg(): void {
@@ -175,6 +183,7 @@ setInterval(() => loadWeather(weatherEls).catch(console.error), 30 * 60 * 1000);
 renderQuickLinks();
 updateDailyFocus();
 applyFocusMode();
+applySearchVisibility();
 
 onShortcut("n", playNextBg);
 onShortcut("s", () => {
@@ -192,6 +201,7 @@ initSettingsPanel(
     toggleClock: document.getElementById("toggleClock") as HTMLInputElement | null,
     toggleQuote: document.getElementById("toggleQuote") as HTMLInputElement | null,
     toggleWeather: document.getElementById("toggleWeather") as HTMLInputElement | null,
+    toggleSearch: document.getElementById("toggleSearch") as HTMLInputElement | null,
     toggleQuickLinks: document.getElementById("toggleQuickLinks") as HTMLInputElement | null,
     toggleFocus: document.getElementById("toggleFocus") as HTMLInputElement | null,
     toggleZen: document.getElementById("toggleZen") as HTMLInputElement | null,
@@ -227,5 +237,6 @@ initSettingsPanel(
     onThemeChange: applyTheme,
     onQuickLinksChange: renderQuickLinks,
     onDailyFocusChange: updateDailyFocus,
+    onSearchChange: applySearchVisibility,
   }
 );

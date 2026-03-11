@@ -2,6 +2,7 @@ export interface Settings {
   showClock: boolean;
   showQuote: boolean;
   showWeather: boolean;
+  showSearch: boolean;
   format24: boolean;
   localVideosOnly: boolean;
   focusMode: boolean;

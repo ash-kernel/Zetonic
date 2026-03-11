@@ -6,6 +6,7 @@ const defaults: Settings = {
   showClock: true,
   showQuote: true,
   showWeather: true,
+  showSearch: true,
   format24: true,
   localVideosOnly: false,
   focusMode: false,
