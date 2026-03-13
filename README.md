@@ -5,6 +5,7 @@
 **Transform your browser's new tab into a serene, anime-inspired experience**
 </div>
 ---
+
 **Zetonic** is a minimalist Chrome extension that replaces your default new tab with a beautiful, distraction-free experience. Featuring stunning anime-themed background videos, a clean interface, and productivity-focused tools, Zetonic helps you start each browsing session with inspiration and clarity.
 
 <div align="centre">
