@@ -42,7 +42,7 @@ function Show-Banner {
     Write-Host "  ╚══════╝╚══════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═══╝╚═╝ ╚═════╝" -ForegroundColor $colors.Info
     Write-Host ""
     Write-Host "  ═══════════════════════════════════════════════════════" -ForegroundColor DarkGray
-    Write-Host "     Minimalist Anime New Tab Experience - Installer v2.0" -ForegroundColor $colors.Warning
+    Write-Host "     Minimalist Anime New Tab Experience - Installer v3.0" -ForegroundColor $colors.Warning
     Write-Host "  ═══════════════════════════════════════════════════════" -ForegroundColor DarkGray
     Write-Host ""
 }
