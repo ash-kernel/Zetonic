@@ -107,7 +107,7 @@ export async function loadWeather(
     async (position) => {
       try {
         const { latitude, longitude } = position.coords;
-        const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weathercode,is_day&timezone=auto`;
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weathercode,is_day&timezone=auto`; //free api bro use paid if u want local weathers
 
         const response = await fetch(url);
         if (!response.ok) throw new Error("Weather API failed");

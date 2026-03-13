@@ -14,6 +14,8 @@ import { initImageBackground, getRandomImageUrl, setBackgroundImage, loadWallpap
 function truncate(s: string, max = 32): string {
   return s.length <= max ? s : s.slice(0, max) + "…";
 }
+ 
+//zero idea on how ts file even exist 
 
 export async function displayUserVideos(
   listEl: HTMLElement | null,

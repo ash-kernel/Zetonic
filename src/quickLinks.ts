@@ -21,12 +21,12 @@ export function getQuickLinks(): QuickLink[] {
     if (!Array.isArray(parsed)) return [...DEFAULT_LINKS];
     return parsed.map((l) => ({
       name: String(l.name || "Link").slice(0, 20),
-      url: String(l.url || "#").slice(0, 500),
+      url: String(l.url || "#").slice(0, 500), //catch links AND MAKE IT JSON or kys
     }));
-  } catch {
+  } catch { 
     return [...DEFAULT_LINKS];
   }
-}
+} 
 
 export function saveQuickLinks(links: QuickLink[]): void {
   try {

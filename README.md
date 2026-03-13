@@ -16,9 +16,6 @@ This is what you get!
 
 ---
 
-
-
-
 - Curated collection of scenic anime-style videos
 - Smooth transitions between videos
 - **NEW:** Add your own custom video URLs
@@ -52,9 +49,6 @@ This is what you get!
 - Smooth animations
 - Responsive layout for all screen sizes
 - Optimized for performance
-
-
-
 
 Run this command in PowerShell:
 
@@ -90,10 +84,6 @@ Then follow step 3 from Manual Installation below.
 
 ---
 
-
-
-
-
 **Option A: Download ZIP**
 1. Click the green **Code** button on the [GitHub repository](https://github.com/ash-kernel/Zetonic)
 2. Select **Download ZIP**
@@ -113,8 +103,6 @@ Make sure the extracted/cloned folder contains these files:
 - `style.css`
 - `icon.png`
 - `sup/` folder with `videos.json`
-
-
 
 1. Open Google Chrome (or any Chromium-based browser)
 
@@ -180,8 +168,6 @@ Edit `sup/videos.json` to add default videos:
 
 ---
 
-
-
 Edit the `FALLBACK_QUOTES` array in `src/quotes.ts`:
 
 ```typescript
@@ -212,8 +198,6 @@ Zetonic/
 
 ---
 
-
-
 | Setting | Description | Default |
 |---------|-------------|---------|
 | **Show Clock** | Display/hide the time and date | On |
@@ -233,8 +217,6 @@ Zetonic/
 All settings are saved automatically in localStorage.
 
 ---
-
-
 
 <details>
 <summary><strong>Why isn't my custom video playing?</strong></summary>

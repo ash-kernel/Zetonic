@@ -9,7 +9,7 @@ const FALLBACK_QUOTES = [
   "The only way to do great work is to love what you do.",
   "Success is not final, failure is not fatal.",
   "Every moment is a fresh beginning.",
-];
+]; //i wrote ts 
 
 export async function loadQuote(quoteEl: HTMLElement | null): Promise<void> {
   if (!quoteEl) return;

@@ -92,7 +92,7 @@ export async function playVideo(
   } catch (error) {
     console.error("Video playback error:", error);
   }
-}
+} //ts will load the fucking video
 
 export function getUserVideos(): string[] {
   try {
