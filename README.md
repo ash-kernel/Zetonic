@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Zetonic Banner](https://cdn.discordapp.com/attachments/1470985393708208323/1471048403046895649/readmebanner.png?ex=699ea796&is=699d5616&hm=dc4a03e1cf60905fea2a7bf336070d050d52bf5c755462e51ac42b4f6b44ab7c&)
+![Zetonic Banner](icon.png)
 
 **Transform your browser's new tab into a serene, anime-inspired experience**
 </div>
@@ -15,7 +15,7 @@
 
 <div align="centre">
 
-![Demo](https://cdn.discordapp.com/attachments/1470985393708208323/1476913276825767936/Screenshot_2026-02-27_173400.png?ex=69a2da2c&is=69a188ac&hm=d79245ceb922cd371d29aeefbbeddb053e342fcc3b31c6c6d005e76a328c35a1&)
+![Demo](sup/demos/fullscreen.png)
 
 This is what you get!
 </div>
@@ -227,13 +227,13 @@ Zetonic/
 | **Time Format** | 12-hour or 24-hour clock | 24-hour |
 | **Custom Videos** | Add/remove personal video URLs | Empty |
 
-![settings](https://cdn.discordapp.com/attachments/1470985393708208323/1477249843318620313/image.png?ex=69a413a0&is=69a2c220&hm=39a2e1b0e533ae5301345076ed628e1e311cd8ba6ab90ca6dd6db7bf3ac1bb68&)
+![settings](sup/demos/welcomestng.png)
 
-![settings2](https://media.discordapp.net/attachments/1470985393708208323/1476913277496983685/Screenshot_2026-02-27_173422.png?ex=69a2da2d&is=69a188ad&hm=352c355e021f496e5f2f8240cf01312d9c96eeb522d785e86e9ec4867e792c4c&=&format=webp&quality=lossless)
+![settings2](sup/demos/videos.png)
 
-![settings3](https://media.discordapp.net/attachments/1470985393708208323/1476913277966614650/Screenshot_2026-02-27_173429.png?ex=69a2da2d&is=69a188ad&hm=d012be00ebeef1be329c03679f9d549f6cb8648c38a04b17d00cb9216356e4a6&=&format=webp&quality=lossless)
+![settings3](sup/demos/toggles.png)
 
-![settings4](https://media.discordapp.net/attachments/1470985393708208323/1476913278327455804/Screenshot_2026-02-27_173446.png?ex=69a2da2d&is=69a188ad&hm=57030bd768f811c553b6f126f34ddee69ba347e4da16cc67b3433cdd96086a3c&=&format=webp&quality=lossless)
+![settings4](sup/demos/quicklinks.png)
 
 
 All settings are saved automatically in localStorage.
