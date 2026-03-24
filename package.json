@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "dev": "vite build --watch"
+    "dev": "vite build --watch",
+    "license": "CC BY-NC 4.0"
   },
   "devDependencies": {
     "typescript": "^5.3.0",
