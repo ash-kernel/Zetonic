@@ -27,12 +27,11 @@
 
 ## Install
 
-**Quick install:**
-```powershell
-irm https://raw.githubusercontent.com/ash-kernel/Zetonic/main/install.bat | iex
-```
+**Option A: Run the installer**
+- Download `Zetonic-Setup.exe` from Releases
+- Run the exe and follow on-screen instructions
 
-**Or manually:**
+**Option B: Load unpacked**
 1. Download this repository
 2. Navigate to `chrome://extensions/`
 3. Enable **Developer Mode**
