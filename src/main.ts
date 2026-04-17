@@ -16,10 +16,7 @@ import { updateTime } from "./clock";
 import { initSearch } from "./search";
 import { loadQuote } from "./quotes";
 import { loadWeather } from "./weather";
-import { initSettingsPanel, displayUserVideos } from "./settingsPanel";
-import { getQuickLinks } from "./quickLinks";
-import { showToast } from "./toast";
-import { onShortcut, initKeyboard } from "./keyboard";
+import { getQuickLinks, saveQuickLinks } from "./quickLinks";
 
 const videoEl = document.getElementById("bgVideo") as HTMLVideoElement | null;
 const bgImageEl = document.getElementById("bgImage");
@@ -30,15 +27,7 @@ const dailyFocusEl = document.getElementById("dailyFocusDisplay");
 const searchInput = document.getElementById("searchInput") as HTMLInputElement | null;
 const searchLogo = document.getElementById("searchLogo");
 const quoteEl = document.getElementById("quote");
-const weatherWidget = document.getElementById("weatherWidget");
-const weatherIcon = document.querySelector(".weather-icon");
-const weatherTemp = document.querySelector(".weather-temp");
-const weatherDesc = document.querySelector(".weather-desc");
-const weatherLocation = document.querySelector(".weather-location");
-const nextBgBtn = document.getElementById("nextBgBtn");
 const quickLinksEl = document.getElementById("quickLinks");
-const searchContainer = document.getElementById("searchContainer");
-const settingsPanel = document.getElementById("settingsPanel");
 
 loadSettings();
 
@@ -65,15 +54,10 @@ async function reloadVideos(): Promise<void> {
   await loadVideos(videoEl);
 }
 
-async function showUserVideos(): Promise<void> {
-  await displayUserVideos(document.getElementById("userVideosList"), reloadVideos);
-}
-
 function applyFocusMode(): void {
-  const { focusMode, zenMode, showQuickLinks } = getSettings();
+  const { focusMode, zenMode, showQuickLinks, showQuote } = getSettings();
   const show = !focusMode && !zenMode;
-  if (quoteEl) quoteEl.style.display = show ? "block" : "none";
-  if (weatherWidget) weatherWidget.style.display = show ? "flex" : "none";
+  if (quoteEl) quoteEl.style.display = show && showQuote ? "block" : "none";
   if (quickLinksEl) quickLinksEl.style.display = show && showQuickLinks ? "flex" : "none";
   if (dailyFocusEl) dailyFocusEl.style.display = show ? "block" : "none";
   document.body.classList.toggle("zen-mode", zenMode);
@@ -81,6 +65,7 @@ function applyFocusMode(): void {
 
 function applySearchVisibility(): void {
   const { showSearch } = getSettings();
+  const searchContainer = document.getElementById("searchContainer");
   if (searchContainer) {
     searchContainer.style.display = showSearch ? "flex" : "none";
   }
@@ -162,81 +147,36 @@ function updateDailyFocus(): void {
   }
 })();
 
-nextBgBtn?.addEventListener("click", playNextBg);
-
 updateTime(timeEl, dateEl, greetingEl);
 setInterval(() => updateTime(timeEl, dateEl, greetingEl), 1000);
 
 initSearch(searchInput, searchLogo);
 loadQuote(quoteEl).catch(console.error);
 
-const weatherEls = {
-  widget: weatherWidget,
-  icon: weatherIcon as HTMLElement | null,
-  temp: weatherTemp as HTMLElement | null,
-  desc: weatherDesc as HTMLElement | null,
-  location: weatherLocation as HTMLElement | null,
-};
-loadWeather(weatherEls).catch(console.error);
-setInterval(() => loadWeather(weatherEls).catch(console.error), 30 * 60 * 1000);
+const settings = getSettings();
+if (settings.showWeather !== false) {
+  import("./weather").then(({ loadWeather }) => {
+    const weatherWidget = document.getElementById("weatherWidget");
+    const weatherIcon = document.querySelector(".weather-icon");
+    const weatherTemp = document.querySelector(".weather-temp");
+    const weatherDesc = document.querySelector(".weather-desc");
+    const weatherLocation = document.querySelector(".weather-location");
+    const weatherEls = {
+      widget: weatherWidget,
+      icon: weatherIcon as HTMLElement | null,
+      temp: weatherTemp as HTMLElement | null,
+      desc: weatherDesc as HTMLElement | null,
+      location: weatherLocation as HTMLElement | null,
+    };
+    loadWeather(weatherEls).catch(console.error);
+    setInterval(() => loadWeather(weatherEls).catch(console.error), 30 * 60 * 1000);
+  });
+} else {
+  const weatherWidget = document.getElementById("weatherWidget");
+  if (weatherWidget) weatherWidget.style.display = "none";
+}
 
 renderQuickLinks();
 updateDailyFocus();
 applyFocusMode();
 applySearchVisibility();
-
-onShortcut("n", playNextBg);
-onShortcut("s", () => {
-  const open = settingsPanel?.getAttribute("data-open") === "true";
-  settingsPanel?.setAttribute("data-open", open ? "false" : "true");
-  if (!open) showUserVideos().catch(console.error);
-});
-initKeyboard();
-
-initSettingsPanel(
-  {
-    settingsBtn: document.getElementById("settingsBtn"),
-    settingsPanel,
-    closeSettings: document.getElementById("closeSettings"),
-    toggleClock: document.getElementById("toggleClock") as HTMLInputElement | null,
-    toggleQuote: document.getElementById("toggleQuote") as HTMLInputElement | null,
-    toggleWeather: document.getElementById("toggleWeather") as HTMLInputElement | null,
-    toggleSearch: document.getElementById("toggleSearch") as HTMLInputElement | null,
-    toggleQuickLinks: document.getElementById("toggleQuickLinks") as HTMLInputElement | null,
-    toggleFocus: document.getElementById("toggleFocus") as HTMLInputElement | null,
-    toggleZen: document.getElementById("toggleZen") as HTMLInputElement | null,
-    toggleLocalOnly: document.getElementById("toggleLocalOnly") as HTMLInputElement | null,
-    timeFormat: document.getElementById("timeFormat") as HTMLSelectElement | null,
-    theme: document.getElementById("theme") as HTMLSelectElement | null,
-    searchEngine: document.getElementById("searchEngine") as HTMLSelectElement | null,
-    bgMode: document.getElementById("bgMode") as HTMLSelectElement | null,
-    imageSource: document.getElementById("imageSource") as HTMLSelectElement | null,
-    customBgUrl: document.getElementById("customBgUrl") as HTMLInputElement | null,
-    imageRotation: document.getElementById("imageRotation") as HTMLInputElement | null,
-    blurLevel: document.getElementById("blurLevel") as HTMLInputElement | null,
-    userName: document.getElementById("userName") as HTMLInputElement | null,
-    dailyFocus: document.getElementById("dailyFocus") as HTMLInputElement | null,
-    addVideoInput: document.getElementById("addVideoInput") as HTMLInputElement | null,
-    addVideoBtn: document.getElementById("addVideoBtn"),
-    uploadVideoInput: document.getElementById("uploadVideoInput") as HTMLInputElement | null,
-    userVideosList: document.getElementById("userVideosList"),
-    uploadLabel: document.querySelector(".upload-btn"),
-    quickLinksEditor: document.getElementById("quickLinksEditor"),
-  },
-  {
-    onUpdateTime: () => updateTime(timeEl, dateEl, greetingEl),
-    onLoadQuote: () => loadQuote(quoteEl).catch(console.error),
-    onLoadWeather: () => loadWeather(weatherEls).catch(console.error),
-    onReloadVideos: () => reloadVideos().catch(console.error),
-    onDisplayVideos: () => showUserVideos().catch(console.error),
-    onFocusModeChange: () => {
-      applyFocusMode();
-      updateDailyFocus();
-    },
-    onBgModeChange: applyBgMode,
-    onThemeChange: applyTheme,
-    onQuickLinksChange: renderQuickLinks,
-    onDailyFocusChange: updateDailyFocus,
-    onSearchChange: applySearchVisibility,
-  }
-);
