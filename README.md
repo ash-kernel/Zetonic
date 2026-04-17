@@ -28,7 +28,7 @@
 ## Install
 
 **Option A: Run the installer**
-- Download `Zetonic-Setup.exe` from Releases
+- Download `Zetonic-Installer.exe` from Releases
 - Run the exe and follow on-screen instructions
 
 **Option B: Load unpacked**
