@@ -8,7 +8,6 @@
 
 [![Browser Support](https://img.shields.io/badge/Browser-Chrome%20%7C%20Edge%20%7C%20Brave-4780FF?style=flat-square&logo=google-chrome&logoColor=white)](#support)
 [![Version](https://img.shields.io/badge/Version-1.0.0-2EA043?style=flat-square)](#)
-[![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](#)
 
 </div>
 
