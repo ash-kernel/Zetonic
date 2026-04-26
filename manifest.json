@@ -1,5 +1,5 @@
 {
-  "manifest_version": 4,
+  "manifest_version": 3,
   "name": "Zetonic",
   "description": "Minimalist anime scenery new tab with bold time display. Streams high-quality videos with random quotes.",
   "version": "4.0",
