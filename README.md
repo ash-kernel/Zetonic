@@ -7,7 +7,7 @@
 **your browser's new tab, but make it aesthetic.**
 
 [![Browser Support](https://img.shields.io/badge/chrome_%7C_edge_%7C_brave-white?style=flat-square&logo=google-chrome&logoColor=gray)](#)
-[![Version](https://img.shields.io/badge/v4.0.0-gray?style=flat-square)](#)
+[![Version](https://img.shields.io/badge/v5.0.0-gray?style=flat-square)](#)
 
 </div>
 
