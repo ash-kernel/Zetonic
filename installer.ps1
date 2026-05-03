@@ -30,6 +30,8 @@ $targetDir = Join-Path -Path $documentsPath -ChildPath "extensions\Zetonic"
 $files = @(
     "sup/videos.json",
     "sup/wallpapers.json",
+    "dist/script.js",
+    "dist/script.js.map",
     "icon.png",
     "index.html",
     "manifest.json",
