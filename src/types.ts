@@ -13,10 +13,11 @@ export interface Settings {
   customBgUrl: string;
   imageRotation: number;
   blurLevel: number;
-  theme: "default" | "amber" | "cyan" | "rose" | "violet";
+  theme: "default" | "amber" | "cyan" | "rose" | "violet" | "premium-dark";
   userName: string;
   dailyFocus: string;
   showQuickLinks: boolean;
+  showNetworkMonitor: boolean;
 }
 
 export type VideoSource = string | LocalVideoData;

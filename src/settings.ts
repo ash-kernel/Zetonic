@@ -21,6 +21,7 @@ const defaults: Settings = {
   userName: "",
   dailyFocus: "",
   showQuickLinks: true,
+  showNetworkMonitor: true,
 };
 
 let settings: Settings = { ...defaults };

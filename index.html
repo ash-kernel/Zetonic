@@ -11,12 +11,25 @@
   <video id="bgVideo" class="bg-layer" autoplay muted loop playsinline></video>
   <div id="bgImage" class="bg-layer bg-image"></div>
 
+  <!-- Existing Weather Widget -->
   <div id="weatherWidget">
     <span class="weather-icon">🌤</span>
     <div class="weather-info">
       <span class="weather-temp">--°</span>
       <span class="weather-desc">—</span>
       <span class="weather-location">—</span>
+    </div>
+  </div>
+
+  <!-- NEW: Network Monitor Widget -->
+  <div id="networkWidget" class="network-widget" style="display: none;">
+    <div class="net-item">
+      <span class="net-label">PING</span>
+      <span id="pingValue" class="net-value">-- ms</span>
+    </div>
+    <div class="net-item">
+      <span class="net-label">STATUS</span>
+      <span id="netStatus" class="net-value online">Online</span>
     </div>
   </div>
 

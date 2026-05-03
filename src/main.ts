@@ -29,10 +29,24 @@ const searchLogo = document.getElementById("searchLogo");
 const quoteEl = document.getElementById("quote");
 const quickLinksEl = document.getElementById("quickLinks");
 
+// Network Monitor Elements
+const networkWidget = document.getElementById("networkWidget");
+const pingValue = document.getElementById("pingValue");
+const netStatus = document.getElementById("netStatus");
+let pingInterval: number | null = null;
+
 loadSettings();
 
 function applyTheme(): void {
-  document.documentElement.setAttribute("data-theme", getSettings().theme || "default");
+  // If the new premium-dark is selected, add it as a class to body, otherwise clear it
+  const theme = getSettings().theme || "default";
+  if (theme === "premium-dark") {
+    document.body.classList.add("theme-premium-dark");
+    document.documentElement.setAttribute("data-theme", "default"); // reset colors
+  } else {
+    document.body.classList.remove("theme-premium-dark");
+    document.documentElement.setAttribute("data-theme", theme);
+  }
 }
 
 function applyBgMode(): void {
@@ -71,20 +85,66 @@ function applySearchVisibility(): void {
   }
 }
 
-function playNextBg(): void {
-  const { bgMode } = getSettings();
-  if (bgMode === "video") {
-    const vs = getVideos();
-    if (!vs.length || !videoEl) return;
-    let next = (getCurrentIndex() + 1) % vs.length;
-    if (next === getCurrentIndex() && vs.length > 1) next = 0;
-    setCurrentIndex(next);
-    playVideo(videoEl, next);
-  } else {
-    const url = getNextImageUrl();
-    setBackgroundImage(bgImageEl as HTMLDivElement, url, getSettings().blurLevel || 0);
+// --- NEW: Network Monitoring Logic ---
+async function measurePing() {
+  if (!navigator.onLine) {
+    if (pingValue) pingValue.textContent = "-- ms";
+    if (netStatus) {
+      netStatus.textContent = "Offline";
+      netStatus.className = "net-value offline";
+    }
+    return;
+  }
+
+  const start = performance.now();
+  try {
+    // Ping a tiny, highly available resource using no-cors to prevent console errors
+    await fetch('https://www.google.com/favicon.ico?_=' + Date.now(), { mode: 'no-cors', cache: 'no-store' });
+    const ping = Math.round(performance.now() - start);
+
+    if (pingValue) pingValue.textContent = `${ping} ms`;
+    if (netStatus) {
+      if (ping < 100) {
+        netStatus.textContent = "Optimal";
+        netStatus.className = "net-value online";
+      } else if (ping < 250) {
+        netStatus.textContent = "Slow";
+        netStatus.className = "net-value warning";
+      } else {
+        netStatus.textContent = "Lagging";
+        netStatus.className = "net-value offline";
+      }
+    }
+  } catch (e) {
+    if (pingValue) pingValue.textContent = "ERR";
+    if (netStatus) {
+      netStatus.textContent = "Unreachable";
+      netStatus.className = "net-value offline";
+    }
   }
 }
+
+function applyNetworkMonitor(): void {
+  const { showNetworkMonitor, zenMode } = getSettings();
+  const shouldShow = showNetworkMonitor && !zenMode;
+
+  if (networkWidget) {
+    networkWidget.style.display = shouldShow ? "flex" : "none";
+  }
+
+  if (shouldShow) {
+    measurePing(); // Check immediately
+    if (!pingInterval) {
+      pingInterval = window.setInterval(measurePing, 5000); // Check every 5s
+    }
+  } else {
+    if (pingInterval) {
+      clearInterval(pingInterval);
+      pingInterval = null;
+    }
+  }
+}
+// -------------------------------------
 
 function renderQuickLinks(): void {
   if (!quickLinksEl) return;
@@ -100,13 +160,14 @@ function renderQuickLinks(): void {
 
 function updateDailyFocus(): void {
   if (dailyFocusEl) {
+    // @ts-ignore
     const f = getSettings().dailyFocus?.trim();
     dailyFocusEl.textContent = f ? `— ${f} —` : "";
   }
 }
 
 (async () => {
-  const { bgMode, imageSource, imageRotation } = getSettings();
+  const { bgMode, imageRotation } = getSettings();
   applyBgMode();
   applyTheme();
 
@@ -134,6 +195,7 @@ function updateDailyFocus(): void {
     await loadWallpapers();
     const url = getRandomImageUrl();
     setBackgroundImage(bgImageEl as HTMLDivElement, url, getSettings().blurLevel || 0);
+    // @ts-ignore
     if (imageRotation > 0) {
       setInterval(() => {
         const next = getNextImageUrl();
@@ -142,6 +204,7 @@ function updateDailyFocus(): void {
           setBackgroundImage(bgImageEl as HTMLDivElement, next, getSettings().blurLevel || 0);
           (bgImageEl as HTMLElement).style.opacity = "1";
         }, 400);
+      // @ts-ignore
       }, imageRotation * 60 * 1000);
     }
   }
@@ -176,7 +239,24 @@ if (settings.showWeather !== false) {
   if (weatherWidget) weatherWidget.style.display = "none";
 }
 
+// --- LIVE SETTINGS UPDATER ---
+window.addEventListener("storage", (event) => {
+  if (event.key === "zetonicSettings") {
+    loadSettings();
+    applyTheme();
+    applyBgMode();
+    applyFocusMode();
+    applySearchVisibility();
+    updateDailyFocus();
+    
+    if (typeof applyNetworkMonitor === "function") {
+      applyNetworkMonitor();
+    }
+  }
+});
+
 renderQuickLinks();
 updateDailyFocus();
 applyFocusMode();
 applySearchVisibility();
+applyNetworkMonitor(); // <-- NEW: Kick off the monitor logic

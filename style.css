@@ -451,3 +451,81 @@ body.zen-mode #time { font-size: clamp(72px, 18vw, 140px); }
     transition-duration: 0.1s !important;
   }
 }
+
+
+/* =========================================
+   PREMIUM DARK THEME OVERRIDES
+   ========================================= */
+:root:has(body.theme-premium-dark) {
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.6);
+  --glass-bg: rgba(10, 10, 12, 0.65); /* Deep, dark tinted glass */
+  --glass-border: rgba(255, 255, 255, 0.04); /* Barely visible border */
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --blur-intensity: blur(16px);
+}
+
+body.theme-premium-dark #mainContent,
+body.theme-premium-dark #weatherWidget,
+body.theme-premium-dark #searchContainer input {
+  background: var(--glass-bg);
+  backdrop-filter: var(--blur-intensity);
+  -webkit-backdrop-filter: var(--blur-intensity);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 16px;
+}
+
+body.theme-premium-dark #time {
+  font-weight: 300; /* Ultra-minimalist thin font for the clock */
+  letter-spacing: -2px;
+  text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+
+ 
+  /* NETWORK MONITOR WIDGET */
+  
+.network-widget {
+  position: fixed;
+  bottom: 30px;
+  left: 30px; /* Sits nicely in the bottom left */
+  background: rgba(15, 15, 15, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 50;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  min-width: 120px;
+}
+
+.net-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.net-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+}
+
+.net-value {
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums; /* Keeps numbers perfectly aligned */
+}
+
+/* Status Colors */
+.net-value.online { color: #4ade80; text-shadow: 0 0 10px rgba(74, 222, 128, 0.3); }
+.net-value.warning { color: #facc15; text-shadow: 0 0 10px rgba(250, 204, 21, 0.3); }
+.net-value.offline { color: #f87171; text-shadow: 0 0 10px rgba(248, 113, 113, 0.3); }

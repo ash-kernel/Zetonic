@@ -4,6 +4,10 @@
   const STORAGE_KEY = "zetonicSettings";
   const QUICK_LINKS_KEY = "zetonicQuickLinks";
   const USER_VIDEOS_KEY = "zetonicUserVideos";
+  
+  const DB_NAME = "ZetonicVideoDB";
+  const DB_VERSION = 1;
+  const STORE_NAME = "localVideos";
 
   const defaultSettings = {
     showClock: true,
@@ -29,7 +33,66 @@
   let currentSettings = { ...defaultSettings };
   let quickLinks = [];
   let userVideos = [];
-  let nextVideoIndex = 0;
+
+  // --- IndexedDB Database Helpers ---
+
+  function openDB() {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(DB_NAME, DB_VERSION);
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => resolve(request.result);
+      request.onupgradeneeded = (event) => {
+        const db = event.target.result;
+        if (!db.objectStoreNames.contains(STORE_NAME)) {
+          db.createObjectStore(STORE_NAME, {
+            keyPath: "id",
+            autoIncrement: true,
+          });
+        }
+      };
+    });
+  }
+
+  async function saveLocalVideoToDB(file) {
+    const db = await openDB();
+    const transaction = db.transaction([STORE_NAME], "readwrite");
+    const store = transaction.objectStore(STORE_NAME);
+    return new Promise((resolve, reject) => {
+      const request = store.add({
+        name: file.name,
+        type: file.type,
+        size: file.size,
+        blob: file,
+        addedAt: Date.now(),
+      });
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  async function getLocalVideosFromDB() {
+    const db = await openDB();
+    const transaction = db.transaction([STORE_NAME], "readonly");
+    const store = transaction.objectStore(STORE_NAME);
+    return new Promise((resolve, reject) => {
+      const request = store.getAll();
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  async function removeLocalVideoFromDB(id) {
+    const db = await openDB();
+    const transaction = db.transaction([STORE_NAME], "readwrite");
+    const store = transaction.objectStore(STORE_NAME);
+    return new Promise((resolve, reject) => {
+      const request = store.delete(id);
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  // --- Settings & LocalStorage Helpers ---
 
   function getSettings() {
     try {
@@ -104,6 +167,8 @@
     return url.substring(0, maxLen - 3) + "…";
   }
 
+  // --- Form & UI Setup ---
+
   function populateForm(settings) {
     const map = {
       userName: settings.userName || "",
@@ -115,6 +180,7 @@
       toggleQuickLinks: settings.showQuickLinks,
       toggleFocus: settings.focusMode,
       toggleZen: settings.zenMode,
+      toggleNetworkMonitor: settings.showNetworkMonitor ?? true,
       toggleLocalOnly: settings.localVideosOnly,
       timeFormat: settings.format24 ? "24" : "12",
       theme: settings.theme || "default",
@@ -165,6 +231,7 @@
       showQuickLinks: document.getElementById("toggleQuickLinks")?.checked ?? true,
       focusMode: document.getElementById("toggleFocus")?.checked ?? false,
       zenMode: document.getElementById("toggleZen")?.checked ?? false,
+      showNetworkMonitor: document.getElementById("toggleNetworkMonitor")?.checked ?? true,
       localVideosOnly: document.getElementById("toggleLocalOnly")?.checked ?? false,
       format24: document.getElementById("timeFormat")?.value === "24",
       theme: document.getElementById("theme")?.value || "default",
@@ -175,6 +242,17 @@
       imageRotation: parseInt(document.getElementById("imageRotation")?.value || "0", 10),
       blurLevel: parseInt(document.getElementById("blurLevel")?.value || "0", 10)
     };
+  }
+
+
+const newTabBtn = document.getElementById("openNewTabBtn");
+  if (newTabBtn) {
+    newTabBtn.addEventListener("click", (e) => {
+      e.preventDefault(); // Stops the weird HTML file behavior
+      
+      // Tells Chrome to open a proper New Tab
+      chrome.tabs.create({ url: "chrome://newtab/" }); 
+    });
   }
 
   function setupSectionToggles() {
@@ -211,13 +289,14 @@
     }
   }
 
-  function renderUserVideos() {
+  // --- Video Management ---
+
+  async function renderUserVideos() {
     const container = document.getElementById("userVideosList");
     if (!container) return;
 
-    const videos = getUserVideos();
-    const urlVideos = videos.filter(v => v.url);
-    const localVideos = videos.filter(v => v.id);
+    const urlVideos = getUserVideos() || [];
+    const localVideos = await getLocalVideosFromDB();
 
     if (urlVideos.length === 0 && localVideos.length === 0) {
       container.innerHTML = '<p class="no-videos">No videos added</p>';
@@ -227,18 +306,20 @@
     let html = "";
     if (urlVideos.length > 0) {
       html += '<div class="video-category">URLs</div>';
-      urlVideos.forEach((v, i) => {
+      urlVideos.forEach((url) => {
+        const displayUrl = typeof url === 'string' ? url : url.url; 
         html += `
           <div class="video-item">
-            <span class="video-url" title="${v.url}">${truncateUrl(v.url, 30)}</span>
-            <button class="remove-btn" data-url="${v.url}" data-type="url">×</button>
+            <span class="video-url" title="${displayUrl}">${truncateUrl(displayUrl, 30)}</span>
+            <button class="remove-btn" data-url="${displayUrl}" data-type="url">×</button>
           </div>
         `;
       });
     }
+    
     if (localVideos.length > 0) {
       html += '<div class="video-category">Local</div>';
-      localVideos.forEach((v, i) => {
+      localVideos.forEach((v) => {
         html += `
           <div class="video-item">
             <span class="video-url" title="${v.name}">${truncateUrl(v.name, 30)}</span>
@@ -251,19 +332,18 @@
     container.innerHTML = html;
 
     container.querySelectorAll(".remove-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
+      btn.addEventListener("click", async () => {
         const type = btn.getAttribute("data-type");
         if (confirm("Remove this video?")) {
           if (type === "url") {
-            const url = btn.getAttribute("data-url");
-            const videos = getUserVideos().filter(v => v.url !== url);
+            const targetUrl = btn.getAttribute("data-url");
+            const videos = getUserVideos().filter(v => v !== targetUrl && v.url !== targetUrl);
             saveUserVideos(videos);
           } else if (type === "local") {
             const id = parseInt(btn.getAttribute("data-id") || "0", 10);
-            const videos = getUserVideos().filter(v => v.id !== id);
-            saveUserVideos(videos);
+            await removeLocalVideoFromDB(id);
           }
-          renderUserVideos();
+          await renderUserVideos();
         }
       });
     });
@@ -274,33 +354,23 @@
     const addBtn = document.getElementById("addVideoBtn");
     const uploadInput = document.getElementById("uploadVideoInput");
 
+    const handleAddUrl = async () => {
+      const url = addInput.value.trim();
+      if (!url) return;
+
+      const videos = getUserVideos();
+      if (!videos.some(v => v === url || v.url === url)) {
+        videos.push(url);
+        saveUserVideos(videos);
+        addInput.value = "";
+        await renderUserVideos();
+      }
+    };
+
     if (addBtn && addInput) {
-      addBtn.addEventListener("click", () => {
-        const url = addInput.value.trim();
-        if (!url) return;
-
-        const videos = getUserVideos();
-        if (!videos.some(v => v.url === url)) {
-          videos.push({ url: url });
-          saveUserVideos(videos);
-          addInput.value = "";
-          renderUserVideos();
-        }
-      });
-
+      addBtn.addEventListener("click", handleAddUrl);
       addInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") {
-          const url = addInput.value.trim();
-          if (!url) return;
-
-          const videos = getUserVideos();
-          if (!videos.some(v => v.url === url)) {
-            videos.push({ url: url });
-            saveUserVideos(videos);
-            addInput.value = "";
-            renderUserVideos();
-          }
-        }
+        if (e.key === "Enter") handleAddUrl();
       });
     }
 
@@ -322,19 +392,8 @@
         }
 
         try {
-          const data = await file.arrayBuffer();
-          const blob = new Blob([data], { type: file.type });
-          const url = URL.createObjectURL(blob);
-
-          const videos = getUserVideos();
-          videos.push({
-            id: Date.now(),
-            name: file.name,
-            url: url,
-            size: file.size
-          });
-          saveUserVideos(videos);
-          renderUserVideos();
+          await saveLocalVideoToDB(file);
+          await renderUserVideos();
           uploadInput.value = "";
         } catch (err) {
           console.error("Upload error:", err);
@@ -345,6 +404,8 @@
 
     renderUserVideos();
   }
+
+  // --- Quick Links ---
 
   function setupQuickLinksEditor(container) {
     if (!container) return;
@@ -460,21 +521,24 @@
     render();
   }
 
-  function setupSaveButton() {
-    const saveBtn = document.getElementById("saveBtn");
-    if (!saveBtn) return;
-
-    saveBtn.addEventListener("click", () => {
-      const data = collectFormData();
-      saveSettings(data);
-
-      saveBtn.textContent = "Saved!";
-      saveBtn.classList.add("saved");
-
-      setTimeout(() => {
-        saveBtn.textContent = "Save Settings";
-        saveBtn.classList.remove("saved");
-      }, 1500);
+  function setupAutoSave() {
+    // Select every input and dropdown in the popup
+    const allInputs = document.querySelectorAll("input, select");
+    
+    allInputs.forEach(input => {
+      // Listen for any changes (typing, checking a box, selecting a dropdown)
+      input.addEventListener("change", () => {
+        const data = collectFormData();
+        saveSettings(data);
+      });
+      
+      // For text inputs and sliders, save instantly as they type/drag
+      if (input.type === "text" || input.type === "range" || input.type === "number") {
+        input.addEventListener("input", () => {
+          const data = collectFormData();
+          saveSettings(data);
+        });
+      }
     });
   }
 
@@ -491,6 +555,9 @@
     setupQuickLinksEditor(document.getElementById("quickLinksEditor"));
     setupSaveButton();
   }
+
+  document.body.addEventListener("change", () => saveSettings(collectFormData()));
+  document.body.addEventListener("input", () => saveSettings(collectFormData()));
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
