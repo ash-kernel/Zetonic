@@ -565,3 +565,14 @@ const newTabBtn = document.getElementById("openNewTabBtn");
     init();
   }
 })();
+
+  // --- Open Source GitHub  ---
+    const osLink = document.getElementById("openSourceLink");
+    if (osLink) {
+      osLink.addEventListener("click", (e) => {
+        e.preventDefault(); // Stops Chrome from blocking the link
+        
+        // Forces Chrome to open a real new tab with your repo
+        chrome.tabs.create({ url: "https://github.com/ash-kernel/Zetonic" });
+      });
+    }
